@@ -7,11 +7,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import org.jocaqes.Estructura.ListaD;
 import org.jocaqes.Estructura.NodoL;
-import org.jocaqes.NewMappables.MyDListAdapter;
 
 @XmlRootElement(name="estudiante")
 @XmlAccessorType(XmlAccessType.PROPERTY)
@@ -24,10 +21,10 @@ public class Estudiante {
 	private String apellido;
 	private int creditos;
 	private String correo;
-	private ListaD<Curso> cursos;
+	public ListaD<Curso> cursos;
 	//private List<Curso> cursos;
 	
-	public Estudiante() {}
+	public Estudiante() {cursos=new ListaD<>();}
 	
 	public Estudiante(int carne, String password, String token, String nombre, String apellido, int creditos,
 			String correo) {
@@ -99,6 +96,8 @@ public class Estudiante {
 	@XmlElement(name="cursos")
 	public List<Curso> getCursos() {
 		List<Curso> out=new ArrayList<>();
+		if(this.cursos==null)
+			return out;
 		NodoL<Curso> aux=cursos.raiz;
 		while(aux!=null)
 		{
@@ -109,9 +108,12 @@ public class Estudiante {
 	}
 
 	public void setCursos(List<Curso> cursos) {
-		for(Curso curso:cursos)
+		if(cursos!=null&&!cursos.isEmpty()&&this.cursos!=null)
 		{
-			this.cursos.add(curso);
+			for(Curso curso:cursos)
+			{
+				this.cursos.add(curso);
+			}
 		}
 	}
 	
