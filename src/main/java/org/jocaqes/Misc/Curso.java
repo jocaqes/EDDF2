@@ -3,23 +3,22 @@ package org.jocaqes.Misc;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 //@XmlRootElement(name="curso")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Curso {
 	public String nombre;
-	public String area;
-	public int creditos;
-	public int codigo;
+	public int nota;
+	public String fecha;
+	public int codigoCurso;
 	
 	public Curso(){}
 		
-	public Curso(String nombre, String area, int creditos, int codigo) {
+	public Curso(String nombre, int nota, String fecha, int codigo) {
 		this.nombre = nombre;
-		this.area = area;
-		this.creditos = creditos;
-		this.codigo = codigo;
+		this.nota = nota;
+		this.fecha = fecha;
+		this.codigoCurso = codigo;
 	}
 	
 	public String getNombre() {
@@ -28,24 +27,30 @@ public class Curso {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getArea() {
-		return area;
+	public int getNota() {
+		return nota;
 	}
-	public void setArea(String area) {
-		this.area = area;
+	public void setNota(int nota) {
+		this.nota = nota;
 	}
-	public int getCreditos() {
-		return creditos;
+	public String getFecha() {
+		return fecha;
 	}
-	public void setCreditos(int creditos) {
-		this.creditos = creditos;
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
 	}
 	public int getCodigo() {
-		return codigo;
+		return codigoCurso;
 	}
 	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+		this.codigoCurso = codigo;
 	}
+
+	@Override
+	public int hashCode() {//usada para facilitar sortedAdd en lista ordenada de cursos
+		return this.codigoCurso;
+	}
+	
 	
 	
 	

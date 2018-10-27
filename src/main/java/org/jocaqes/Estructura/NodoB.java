@@ -266,6 +266,7 @@ public class NodoB<T> {
        return llave;
    }
 
+   
    /**
     * Recupera el item extra que se crea cuando un item ya no cabe en el nodo actual
     * y limpia el registro de item_extra

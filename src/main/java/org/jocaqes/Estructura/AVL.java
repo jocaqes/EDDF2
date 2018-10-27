@@ -336,6 +336,7 @@ public class AVL<T> {
         Archivo.graficar(codigo, url);
     }*/
     
+    /*
     private String codigoNodos(Nodo<T> raiz)
     {
         String codigo="";
@@ -346,7 +347,7 @@ public class AVL<T> {
             codigo+=codigoNodos(raiz.der);
         }
         return codigo;
-    }
+    }*/
     
     /**
      * Realiza una actualizacion de los factores de equilibrio de la raiz y sus hijos 

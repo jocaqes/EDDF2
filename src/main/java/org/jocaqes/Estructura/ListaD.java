@@ -44,6 +44,59 @@ public class ListaD <T>{
     }
     
     /**
+     *Agrega un nuevo item a la lista y lo coloca en una posicion ordenada
+     * segun el parametro numerico obtenido de la funcion hash del item a 
+     * insertar
+     * @param item el nuevo valor a insertar
+     * @return <tt>true</tt> si la insercion fue exitosa
+     * <tt>false</tt> si el valor es repetido
+     */
+    public boolean sortedAdd(T item)
+    {
+        if(isEmpty())
+        {
+            raiz=new NodoL<>(item);
+            fin=raiz;
+            return true;
+        }
+        else
+        {
+            NodoL<T> aux=raiz;
+            while(aux!=null)
+            {
+                if(item.hashCode()<aux.item.hashCode())
+                {
+                    if(aux.anterior==null)//aux es la raiz
+                    {
+                        aux.anterior=new NodoL<>(item);//lo agrego antes de aux
+                        aux.anterior.siguiente=aux;//apunto el siguiente del nuevo a aux
+                        raiz=aux.anterior;//actualizo la raiz
+                    }
+                    else
+                    {
+                        aux.anterior.siguiente=new NodoL<>(item);//colocamos al nuevo antes de aux, el puntero anterior apunta ahora a nuevo en lugar de aux
+                        aux.anterior.siguiente.anterior=aux.anterior;//el anterior de nuevo(aux.anterior.siguiente) sera el anterior de aux
+                        aux.anterior.siguiente.siguiente=aux;//el siguiente de nuevo es aux
+                        aux.anterior=aux.anterior.siguiente;//el anterior de aux es el nuevo
+                    }
+                    return true;
+                }
+                else if(aux.siguiente==null)//llegue al final, por tanto es el ultimo
+                {
+                    fin.siguiente=new NodoL<>(item);
+                    fin.siguiente.anterior=fin;
+                    fin=fin.siguiente;
+                    return true;
+                }
+                else if(item.hashCode()==aux.item.hashCode())//valor repetido
+                    return false;
+                aux=aux.siguiente;
+            }
+        }
+        return true;
+    }
+    
+    /**
      * Funcion para revisar si la lista se encuentra actualmente vacia
      * @return <tt>true</tt> si la raiz de la lista es nula y por 
      * tanto esta vacia <tt>false</tt> e caso contrario.

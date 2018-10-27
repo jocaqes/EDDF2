@@ -7,55 +7,53 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
 import org.jocaqes.Estructura.ListaD;
 import org.jocaqes.Estructura.NodoL;
 
 @XmlRootElement(name="estudiante")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Estudiante {
-	private int carne;
-	//private long dpi;
+	private int carnet;
+	private double dpi;
 	private String password;
 	private String token;
 	private String nombre;
-	private String apellido;
+	private String apellidos;
 	private int creditos;
 	private String correo;
 	public ListaD<Curso> cursos;
-	//private List<Curso> cursos;
 	
 	public Estudiante() {cursos=new ListaD<>();}
 	
-	public Estudiante(int carne, String password, String token, String nombre, String apellido, int creditos,
+	public Estudiante(int carnet, double dpi, String password, String token, String nombre, String apellidos, int creditos,
 			String correo) {
-		this.carne = carne;
-		//this.dpi = dpi;
+		this.carnet = carnet;
+		this.dpi = dpi;
 		this.password = password;
 		this.token = token;
 		this.nombre = nombre;
-		this.apellido = apellido;
+		this.apellidos = apellidos;
 		this.creditos = creditos;
 		this.correo = correo;
 		cursos=new ListaD<>();
-		cursos.add(new Curso("mate", "matematica", 6, 106));
-		cursos.add(new Curso("fisica1", "fisica", 4, 202));
 	}
 
 	
-	public int getCarne() {
-		return carne;
+	public int getCarnet() {
+		return carnet;
 	}
 
-	public void setCarne(int carne) {
-		this.carne = carne;
+	public void setCarnet(int carnet) {
+		this.carnet = carnet;
 	}
-	/*
-	public long getDpi() {
+	public double getDpi() {
 		return dpi;
 	}
-	public void setDpi(long dpi) {
+	public void setDpi(double dpi) {
 		this.dpi = dpi;
-	}*/
+	}
 	public String getPassword() {
 		return password;
 	}
@@ -74,11 +72,11 @@ public class Estudiante {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getApellido() {
-		return apellido;
+	public String getApellidos() {
+		return apellidos;
 	}
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public void setApellidos(String apellido) {
+		this.apellidos = apellido;
 	}
 	public int getCreditos() {
 		return creditos;
@@ -112,33 +110,17 @@ public class Estudiante {
 		{
 			for(Curso curso:cursos)
 			{
-				this.cursos.add(curso);
+				this.cursos.sortedAdd(curso);
 			}
 		}
 	}
-	
-	
 
-
-
-
-
-	
-	/*public java.util.List<Curso> getCursos() {
-		java.util.List<Curso> cursos = new java.util.ArrayList<>();
-		NodoL<Curso> aux=this.cursos.raiz;
-		while(aux!=null)
-		{
-			cursos.add(aux.item);
-			aux=aux.siguiente;
-		}
-		return cursos;
+	@XmlTransient
+	@Override
+	public int hashCode() {
+		return carnet;
 	}
-
-	public void setCursos(java.util.List<Curso> cursos ) {
-		for(Curso curso:cursos)
-			this.cursos.add(curso);
-	}*/
+	
 	
 	
 	

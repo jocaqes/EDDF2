@@ -9,11 +9,22 @@ public class ArbolB <T>{
     public NodoB<T> raiz;
     private final int k;//el numero maximo de llaves/items en un nodo
 
+    /**
+     * Constructor para un arbol b con grado igual a su parametro k
+     * @param k grado para el arbol
+     */
     public ArbolB(int k) {
         this.k=k;
     }
     
-    public void add(T item, int llave)
+    /**
+     * Agrega un nuevo item a el arbol B, tomando en cuenta que valores repetidos son descartados
+     * @param item el nuevo item a agregar
+     * @param llave identificador unico del item
+     * @return <tt>true</tt> si la insercion fue exitosa, <tt>false</tt> en caso que la llave este
+     * repetida
+     */
+    public boolean add(T item, int llave)
     {
         if(raiz==null)
         {
@@ -22,8 +33,12 @@ public class ArbolB <T>{
         }
         else
         {
+        	T encontrado=buscar(llave);
+        	if(encontrado!=null)
+        		return false;
             raiz=add(raiz,null,item,llave);
         }
+        return true;
     }
     private NodoB<T> add(NodoB<T> actual,NodoB<T> padre, T nuevo, int llave)
     {
@@ -87,6 +102,78 @@ public class ArbolB <T>{
         return padre;
     }
     
+    /**
+     * Busca un item en el arbol que corresponda con el parametro proporcionado
+     * @param llave el parametro de busqueda
+     * @return el objeto encontrado si es que existe, en caso contrario retorna 
+     * <tt>null</tt>
+     */
+    public T buscar(int llave)
+    {
+    	if(isEmpty())
+    		return null;
+    	T item = buscar(llave,raiz);
+    	return item;
+    }
+    @SuppressWarnings("unchecked")
+	private T buscar(int llave, NodoB<T> raiz)
+    {
+    	if(raiz==null)
+    		return null;
+    	int index=0;
+    	boolean encontrado=false;
+    	while(index<raiz.ocupados&&llave>=raiz.llaves[index].hashCode()&&!encontrado)
+    	{
+    		if(llave==raiz.llaves[index].hashCode())
+    			encontrado=true;
+    		else
+    			index++;
+    	}
+    	if(encontrado)
+    		return (T)raiz.llaves[index];
+    	return buscar(llave,raiz.hijos[index]);
+    }
+    /**
+     * Busca en el arbol la posicion que corresponde al parametro proporcionado y actualiza
+     * sus valores con los valores proporcionados
+     * @param llave identificador de la posicion a buscar
+     * @param item los nuevos valores para la actualizacion
+     * @return <tt>true</tt> si la modificacion fue exitosa; <tt>false</tt> si no se encontro
+     * ningun valor que corresponda con la llave
+     */
+    public boolean modificar(int llave, T item)
+    {
+    	return modificar(llave,item,raiz);
+    }
+    private boolean modificar(int llave, T item, NodoB<T> raiz)
+    {
+    	if(raiz==null)
+    		return false;
+    	int index=0;
+    	boolean encontrado=false;
+    	while(index<raiz.ocupados&&llave>=raiz.llaves[index].hashCode()&&!encontrado)
+    	{
+    		if(llave==raiz.llaves[index].hashCode())
+    		{
+    			encontrado=true;
+    			raiz.llaves[index]=item;
+    		}
+    		else
+    			index++;
+    	}
+    	if(encontrado)
+    		return true;
+    	return modificar(llave,item,raiz.hijos[index]);
+    }
+    
+    /**
+     * Revisa si el arbol esta vacio
+     * @return <tt>true</tt> si esta vacio(su raiz es null) <tt>false</tt> en caso contrario
+     */
+    public boolean isEmpty()
+    {
+    	return raiz==null;
+    }
     /*public void graficar(String url)
     {
         String codigo="digraph G{\n";
