@@ -16,10 +16,20 @@ public class RestClient {
 	 * El path inicial para peticiones del administrador
 	 */
 	private static WebTarget admin_target = cliente.target("http://localhost:8080/EDDF2/webapi/Admin/");
+	/**
+	 * El path inicial para peticiones miscelaneas
+	 */
+	private static WebTarget misc_target = cliente.target("http://localhost:8080/EDDF2/webapi/misc/");
 	
 	
 	public static WebTarget getAdmin_target() {
 		return admin_target;
 	}
+
+
+	public static WebTarget getMisc_target() {
+		return misc_target;
+	}
+	
 	
 }

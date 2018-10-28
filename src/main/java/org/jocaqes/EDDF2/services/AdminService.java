@@ -6,6 +6,11 @@ import org.jocaqes.Estructura.ArbolB;
 import org.jocaqes.Misc.DataBase;
 import org.jocaqes.Misc.Estudiante;
 
+/**
+ * Clase para el manejo de los servicios del administrador
+ * @author jocaqes
+ *
+ */
 public class AdminService {
 	private ArbolB<Estudiante> arbol_b=DataBase.getBtreeEstudiantes();
 	
@@ -46,21 +51,4 @@ public class AdminService {
 		}
 	}
 	
-	/**
-	 * Busca un estudiante por su carne y luego verifica si la contraseña
-	 * provista coincide con la del estudiante en base de datos.
-	 * @param carne usuario con el que el estudiante ingresa a la plataforma
-	 * @param password contraseña del estudiante
-	 * @return <tt>true</tt> si el carne y el password coinciden para el estudiante
-	 * encontrado; <tt>false</tt> si no coinciden o si el estudiante no existe
-	 */
-	public boolean login(int carne, String password)
-	{
-		Estudiante encontrado=arbol_b.buscar(carne);
-		if(encontrado==null)
-			return false;
-		if(encontrado.getPassword().equals(password))
-			return true;
-		return false;
-	}
 }

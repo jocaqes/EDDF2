@@ -8,6 +8,7 @@
 <title>Test title</title>
 </head>
 <body>
+<a href="SessionLogin">Logout</a>
 	<h1>Hola te saludamos de la pagina test</h1>
 	<br>
 	<h3>Bienvenido: ${sessionScope.user} </h3>

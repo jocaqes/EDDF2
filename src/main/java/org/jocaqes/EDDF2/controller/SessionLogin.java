@@ -51,7 +51,8 @@ public class SessionLogin extends HttpServlet {
 			}
 			else
 			{
-				WebTarget search=RestClient.getAdmin_target().path("login/{carne}/{password}");//path para llamar rest buscar alumno en arbol B  
+				WebTarget search=RestClient.getMisc_target()
+						.path("login/{carne}/{password}");//path para llamar rest buscar alumno en arbol B  
 				Response respuesta=search
 						.resolveTemplate("carne", usuario)
 						.resolveTemplate("password", password)
@@ -72,6 +73,15 @@ public class SessionLogin extends HttpServlet {
 			}
 		}
 	}
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session=req.getSession();
+		session.removeAttribute("user");
+		resp.sendRedirect("index.jsp");
+	}
+	
+	
 	
 	/*
 	private static String buscarEstudiante(String carnet)

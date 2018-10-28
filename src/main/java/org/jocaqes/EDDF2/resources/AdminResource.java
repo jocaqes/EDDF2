@@ -16,7 +16,11 @@ import javax.ws.rs.core.Response.Status;
 import org.jocaqes.EDDF2.services.AdminService;
 import org.jocaqes.Misc.Estudiante;
 import org.jocaqes.Misc.Estudiantes;
-
+/**
+ * RestAPI para con funciones exclusivas de administrador
+ * @author jocaqes
+ *
+ */
 @Path("/Admin")
 public class AdminResource {
 	AdminService service = new AdminService(); 
@@ -45,6 +49,7 @@ public class AdminResource {
 			return Response.status(Status.NOT_FOUND).entity("{\"error\":\"el estudiante no existe\"}").build();
 	}
 	
+	/*
 	@GET
 	@Path("/login/{carne}/{password}")
 	@Consumes(MediaType.TEXT_PLAIN)
@@ -54,7 +59,7 @@ public class AdminResource {
 		if(service.login(carne, password))
 			return Response.status(Status.ACCEPTED).entity(true).build();
 		return Response.status(Status.UNAUTHORIZED).entity(false).build();
-	}
+	}*/
 
 	
 	@POST
