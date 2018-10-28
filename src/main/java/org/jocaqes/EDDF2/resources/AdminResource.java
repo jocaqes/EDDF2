@@ -9,7 +9,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -45,6 +44,17 @@ public class AdminResource {
 		else
 			return Response.status(Status.NOT_FOUND).entity("{\"error\":\"el estudiante no existe\"}").build();
 	}
+	
+	@GET
+	@Path("/login/{carne}/{password}")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response loginEstudiante(@PathParam("carne") int carne, @PathParam("password") String password)
+	{
+		if(service.login(carne, password))
+			return Response.status(Status.ACCEPTED).entity(true).build();
+		return Response.status(Status.UNAUTHORIZED).entity(false).build();
+	}
 
 	
 	@POST
@@ -66,6 +76,5 @@ public class AdminResource {
 	{
 		return Response.status(Status.NOT_IMPLEMENTED).entity("Esta funcion no esta implementada aun").build();
 	}
-	
-	
+		
 }

@@ -1,14 +1,23 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <html>
+<title>Home</title>
 <body>
-    <h2>Jersey RESTful Web Application!</h2>
-    <p><a href="webapi/myresource">Jersey resource</a>
-    <p>Visit <a href="http://jersey.java.net">Project Jersey website</a>
-    <p>Test a resource<a href="webapi/Admin/test?valor=1">And get a greeting</a>
-    <form action="test.jsp" method="GET">
-    	Buscar estudiante:<input type="text" name="carnet" placeholder="eg.201212921"/>
-		<br><br>
-		<input type="submit" value="Submit"/>
-    </form>
-    for more information on Jersey!
+	<!-- Aqui iria un encabezado -->
+	<!-- algunos dibujos -->
+	<img alt="Imagen no disponible" src="Imagenes/izumi.jpeg">
+	<form method="post" action="SessionLogin">
+		${mensaje }
+		<fieldset>
+			<legend>Login</legend>
+			Nombre de Usuario:<br>
+			<input type="text" name="usuario"><br>
+			Contraseña:<br>
+			<input type="password" name="password"><br><br>
+			<input type="submit" value="OK">
+		</fieldset>	
+	</form>
+	
+	<!-- Aqui iria un pie de pagina -->
 </body>
 </html>
