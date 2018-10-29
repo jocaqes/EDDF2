@@ -78,33 +78,5 @@ public class Sesion extends HttpServlet {
 		}
 	}
 
-	/*
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session=req.getSession();
-		session.removeAttribute("user");
-		System.out.println(req.getContextPath());
-		resp.sendRedirect(req.getContextPath()+"/index.jsp");
-	}*/
-	
-	
-	
-	/*
-	private static String buscarEstudiante(String carnet)
-	{
-		WebTarget search=admin_target.path("buscar/{carne}");
-		Response response = search
-				.resolveTemplate("carne", carnet)
-				.request(MediaType.APPLICATION_JSON)
-				.get();
-		if(response.getStatus()==Status.FOUND.getStatusCode())
-		{
-			return response.readEntity(String.class);
-		}else//404
-		{
-			return response.readEntity(String.class);
-		}
-	}
-*/
 
 }

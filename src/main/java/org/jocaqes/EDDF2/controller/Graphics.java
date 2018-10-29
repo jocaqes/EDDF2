@@ -42,7 +42,7 @@ public class Graphics extends HttpServlet {
 			if(base64!=null)//si todo salio bien
 			{
 				String imagen="<img src=\"data:image/png;base64, ";
-				imagen+=base64+"\" alt=\"Imagen no disponible\"/>";
+				imagen+=base64+"\" alt=\"Imagen no disponible\" width=\"100%\"/>";
 				request.setAttribute("imagen", imagen);//generamos un string para imagen html y lo agregamos como atributo
 			}
 		}

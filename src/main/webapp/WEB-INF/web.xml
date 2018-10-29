@@ -15,17 +15,14 @@
     <servlet-name>Jersey Web Application</servlet-name>
     <url-pattern>/webapi/*</url-pattern>
   </servlet-mapping>
-  
-  
   <servlet>
-  	<servlet-name>inicio-sesion</servlet-name>
-  	<servlet-class>org.jocaqes.EDDF2.controller.Sesion</servlet-class>
+    <servlet-name>inicio-sesion</servlet-name>
+    <servlet-class>org.jocaqes.EDDF2.controller.Sesion</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>inicio-sesion</servlet-name>
-  	<url-pattern>/sesion</url-pattern>
+    <servlet-name>inicio-sesion</servlet-name>
+    <url-pattern>/sesion</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>graficar</servlet-name>
     <servlet-class>org.jocaqes.EDDF2.controller.Graphics</servlet-class>
@@ -33,5 +30,15 @@
   <servlet-mapping>
     <servlet-name>graficar</servlet-name>
     <url-pattern>/graph</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ArbolBservlet</display-name>
+    <servlet-name>ArbolBservlet</servlet-name>
+    <servlet-class>org.jocaqes.EDDF2.controller.ArbolBservlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ArbolBservlet</servlet-name>
+    <url-pattern>/estudiantes</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -29,11 +29,14 @@ public class AdminResource {
 	@Path("/agregar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String agregarEstudiante(Estudiante estudiante)
+	public Response agregarEstudiante(Estudiante estudiante)
 	{
 		if(service.agregar(estudiante, estudiante.getCarnet()))
+			return Response.status(Status.CREATED).entity("Estudiante agregado con exito!!").build();
+		return Response.status(Status.BAD_REQUEST).entity("El estudiante no pudo ser agregado, lo sentimos").build();
+		/*
 			return "Estudiante agregado con exito!!";
-		return "El carne del estudiante esta repetido, por favor cambie ese valor";
+		return "El carne del estudiante esta repetido, por favor cambie ese valor";*/
 	}	
 	
 	@GET

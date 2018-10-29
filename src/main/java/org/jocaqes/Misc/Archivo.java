@@ -1,8 +1,10 @@
 package org.jocaqes.Misc;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -57,6 +59,31 @@ public class Archivo {
 			e.printStackTrace();
 		}
     } 
+    
+    public static String leer(String ruta)
+    {
+    	String contenido="";
+    	boolean funciono=true;
+    	try {
+			FileReader archivo = new FileReader(ruta);
+			BufferedReader br = new BufferedReader(archivo);
+			String lectura="";
+			while((lectura=br.readLine())!=null)
+				contenido+=lectura;
+			br.close();
+				
+		} catch (FileNotFoundException e) {
+			funciono=false;
+			e.printStackTrace();
+		} catch (IOException e) {
+			funciono=false;
+			e.printStackTrace();
+		}
+    	if(funciono)
+    		return contenido;
+    	return null;
+    	
+    }
     
     public static String graficaBase64(String ruta, String nombre)
     {
