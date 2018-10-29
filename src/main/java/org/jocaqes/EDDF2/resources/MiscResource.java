@@ -31,5 +31,14 @@ public class MiscResource {
 		}
 		return Response.status(Status.UNAUTHORIZED).entity(false).build();
 	}
+	
+	@GET
+	@Path("/btree")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response codigoBtree()
+	{
+		return Response.status(Status.OK).entity(service.graficaArbolB()).build();
+	}
 
 }

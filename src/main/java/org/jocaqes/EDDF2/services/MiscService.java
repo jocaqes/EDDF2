@@ -31,6 +31,17 @@ public class MiscService {
 	}
 	
 	/**
+	 * Obtiene el codigo para generar la grafica del arbol b
+	 * @return Una cadena con codigo para graphviz del arbol b
+	 */
+	public String graficaArbolB()
+	{
+		return arbol_b.grafica();
+	}
+	
+	
+	
+	/**
 	 * Revisa si una cadena es un numero o no
 	 * @param number la cadena que se quiere revisar
 	 * @return <tt>true</tt> si efectivamente es un numero,

@@ -120,6 +120,21 @@ public class Estudiante {
 	public int hashCode() {
 		return carnet;
 	}
+
+	@XmlTransient
+	@Override
+	public String toString() {
+		String codigo="";
+		codigo+=nombre+" "+apellidos+"&#92;n";
+		codigo+="carnet:"+carnet+"&#92;n";
+		codigo+="dpi:"+java.math.BigDecimal.valueOf(dpi)+"&#92;n";
+		codigo+="contraseña:"+password+"&#92;n";
+		codigo+="token:"+token+"&#92;n";
+		codigo+="creditos:"+creditos+"&#92;n";
+		codigo+="correo:"+correo+"&#92;n";
+		return codigo;
+	}
+	
 	
 	
 	

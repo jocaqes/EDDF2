@@ -15,24 +15,23 @@
     <servlet-name>Jersey Web Application</servlet-name>
     <url-pattern>/webapi/*</url-pattern>
   </servlet-mapping>
- <!--  <servlet>
-    <description></description>
-    <display-name>AdminServlet</display-name>
-    <servlet-name>AdminServlet</servlet-name>
-    <servlet-class>org.jocaqes.EDDF2.servlets.AdminServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AdminServlet</servlet-name>
-    <url-pattern>/AdminServlet</url-pattern>
-  </servlet-mapping>
+  
+  
   <servlet>
-    <description></description>
-    <display-name>SessionServlet</display-name>
-    <servlet-name>SessionServlet</servlet-name>
-    <servlet-class>org.jocaqes.EDDF2.servlets.SessionServlet</servlet-class>
+  	<servlet-name>inicio-sesion</servlet-name>
+  	<servlet-class>org.jocaqes.EDDF2.controller.Sesion</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>SessionServlet</servlet-name>
-    <url-pattern>/SessionServlet</url-pattern>
-  </servlet-mapping>-->
+  	<servlet-name>inicio-sesion</servlet-name>
+  	<url-pattern>/sesion</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>graficar</servlet-name>
+    <servlet-class>org.jocaqes.EDDF2.controller.Graphics</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>graficar</servlet-name>
+    <url-pattern>/graph</url-pattern>
+  </servlet-mapping>
 </web-app>

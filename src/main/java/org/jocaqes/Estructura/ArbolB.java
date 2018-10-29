@@ -174,15 +174,20 @@ public class ArbolB <T>{
     {
     	return raiz==null;
     }
-    /*public void graficar(String url)
+    /**
+     * Genera codigo que representa al arbol con un formato apto para graphviz
+     * si el arbol estuviese vacio la grafica es vacia pero no genera ningun error
+     * @return Una cadena en formato apto para graphviz
+     */
+    public String grafica()
     {
-        String codigo="digraph G{\n";
-        codigo+="node [shape=record];\n";
-        codigo+=codigoNodos(raiz);
-        codigo+="}";
-        Archivo.graficar(codigo, url);
-    }*/
-    public String codigoNodos(NodoB<T> raiz)
+    	String codigo="digraph G{\n";
+    	codigo+="node [shape=record];\n";
+    	codigo+=codigoNodos(raiz);
+    	codigo+="}";
+    	return codigo;
+    }
+    private String codigoNodos(NodoB<T> raiz)
     {
         String codigo="";
         if(raiz!=null)

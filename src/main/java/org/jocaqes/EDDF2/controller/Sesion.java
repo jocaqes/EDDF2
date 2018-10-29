@@ -2,7 +2,6 @@ package org.jocaqes.EDDF2.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,10 +14,10 @@ import javax.ws.rs.core.Response.Status;
 import org.jocaqes.EDDF2.restclient.RestClient;
 
 /**
- * Servlet implementation class SessionServlet para el manejo de login
+ * Servlet implementation class SessionServlet; para el manejo de login
  */
-@WebServlet("/SessionLogin")
-public class SessionLogin extends HttpServlet {
+//@WebServlet("/SessionLogin")
+public class Sesion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	/**
@@ -37,9 +36,14 @@ public class SessionLogin extends HttpServlet {
 		//Revisamos por admin
 		else if(usuario.equals("ADMIN")&&password.equals("140918"))//contraseña para ADMIN 140918
 		{
-			HttpSession session = request.getSession();
+			HttpSession session = request.getSession(false);
 			session.setAttribute("user", usuario);
-			response.sendRedirect("test.jsp");
+			//debug
+			/*String path=getServletContext().getRealPath("/Imagenes");
+			System.out.println(path);
+			request.setAttribute("path", path);
+			request.getRequestDispatcher("Admin/HomeAdmin.jsp").forward(request, response);*/
+			response.sendRedirect("Admin/HomeAdmin.jsp");
 		}
 		//Revisamos por alumno
 		else {
@@ -61,11 +65,11 @@ public class SessionLogin extends HttpServlet {
 				int status = respuesta.getStatus();
 				if(status==Status.ACCEPTED.getStatusCode())//match entre usuario y password
 				{
-					HttpSession session = request.getSession();
+					HttpSession session = request.getSession(false);
 					session.setAttribute("user", usuario);
 					response.sendRedirect("test.jsp");
 				}
-				else//aqui es un Status.UNAUTHORIZED pero la verdad es irrelevante
+				else//aqui es un Status.UNAUTHORIZED pero la verdad es irrelevante porque no puedo dejar que la pagina se caiga
 				{
 					request.setAttribute("mensaje", "La contraseña o el usuario no es valido");
 					request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -74,12 +78,14 @@ public class SessionLogin extends HttpServlet {
 		}
 	}
 
+	/*
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session=req.getSession();
 		session.removeAttribute("user");
-		resp.sendRedirect("index.jsp");
-	}
+		System.out.println(req.getContextPath());
+		resp.sendRedirect(req.getContextPath()+"/index.jsp");
+	}*/
 	
 	
 	
