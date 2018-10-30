@@ -40,13 +40,6 @@ public class ArbolBservlet extends HttpServlet {
 		{
 			String ruta_archivo=request.getParameter("ruta");
 			cargaMasiva(ruta_archivo,request,response);
-			/*if(respuesta==null)
-				response.sendRedirect("estudiantes.jsp");
-			else
-			{
-				request.setAttribute("mensaje", respuesta);
-				request.getRequestDispatcher("estudiantes.jsp").forward(request, response);
-			}*/
 		}else if(tipo_request.equals("add"))
 		{
 			agregar(request,response);

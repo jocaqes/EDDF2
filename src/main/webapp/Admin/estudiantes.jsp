@@ -54,8 +54,7 @@
 	
 	
 	<form method="get" action="graph">
-		Nombre para la Grafica:<br>
-		<input type="text" name="nombre_archivo"><br>
+		<input type="hidden" name="tipo" value="btree"> 
 		<input type="submit" value="Graficar">
 	</form>
 	<br>

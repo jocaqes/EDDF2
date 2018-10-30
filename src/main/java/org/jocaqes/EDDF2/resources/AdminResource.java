@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.jocaqes.EDDF2.services.AdminService;
+import org.jocaqes.Misc.Cursos;
 import org.jocaqes.Misc.Estudiante;
 import org.jocaqes.Misc.Estudiantes;
 /**
@@ -83,6 +84,17 @@ public class AdminResource {
 	public Response modificarEstudiante(Estudiante estudiante)
 	{
 		return Response.status(Status.NOT_IMPLEMENTED).entity("Esta funcion no esta implementada aun").build();
+	}
+	
+	@POST
+	@Path("/pensum/cargar")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response cargarPensum(Cursos cursos)
+	{
+		service.cargarCursos(cursos.getCursos());
+		return Response.status(Status.CREATED).entity(service.debug()).build();
+		//return Response.status(Status.CREATED).entity(cursos).build();
 	}
 		
 }

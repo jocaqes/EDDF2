@@ -3,6 +3,8 @@ package org.jocaqes.EDDF2.services;
 import java.util.List;
 
 import org.jocaqes.Estructura.ArbolB;
+import org.jocaqes.Estructura.Grafo;
+import org.jocaqes.Misc.CursoP;
 import org.jocaqes.Misc.DataBase;
 import org.jocaqes.Misc.Estudiante;
 
@@ -13,6 +15,7 @@ import org.jocaqes.Misc.Estudiante;
  */
 public class AdminService {
 	private ArbolB<Estudiante> arbol_b=DataBase.getBtreeEstudiantes();
+	private Grafo pensum=DataBase.getPensum();
 	
 	public AdminService() {}
 	
@@ -49,6 +52,27 @@ public class AdminService {
 			Estudiante nuevo=estudiantes.remove(0);
 			arbol_b.add(nuevo, nuevo.getCarnet());
 		}
+	}
+	/**
+	 * Toma todos los cursos de una lista y los agrega en un grafo
+	 * @param cursos lista de todos los cursos que se desean guardar en el pensum 
+	 */
+	public void cargarCursos(List<CursoP> cursos)
+	{
+		for(CursoP curso:cursos)
+		{
+			pensum.agregarEncabezado(curso.getCodigo(), curso);
+		}
+		while(!cursos.isEmpty())
+		{
+			CursoP nuevo=cursos.remove(0);
+			pensum.agregarPre(nuevo);
+		}
+	}
+	
+	public String debug()
+	{
+		return pensum.codigoGrafo();
 	}
 	
 }
