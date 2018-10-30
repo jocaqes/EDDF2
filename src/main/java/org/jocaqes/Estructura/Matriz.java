@@ -19,7 +19,8 @@ public class Matriz <T,S>{
      */
     public Matriz() {
         columnas=filas=0;
-        raiz_columnas=raiz_filas=null;
+        raiz_columnas=null;
+    	raiz_filas=null;
     }
     /**
      * Revisa si no hay ninguna columna actualmente en la matriz
@@ -42,14 +43,16 @@ public class Matriz <T,S>{
     /**
      * Agrega una nueva columna a la matriz con el cuidado que el encabezado no este repetido.
      * @param encabezado la etiqueta para identificar la columna
-     * @return <tt>true</tt> si la insercion fue exitosa
-     * <tt>false</tt> si el encabezado estaba repetido
+     * @return El nuevo encabezado si la insercion fue exitosa
+     * <tt>null</tt> si el encabezado estaba repetido
      */
-    public boolean addColumn(String encabezado)
+    public Encabezado<T, S> addColumn(String encabezado)
     {
         if(columnasVacias())
         {
             raiz_columnas=new Encabezado<>(encabezado, columnas,true);
+            columnas++;
+            return raiz_columnas;
         }
         else
         {
@@ -57,29 +60,30 @@ public class Matriz <T,S>{
             boolean repetido=false;
             while(aux.siguiente!=null&&!repetido)
             {
-                if(aux.header.toLowerCase().equals(encabezado))
+                if(aux.header.toLowerCase().equals(encabezado.toLowerCase()))
                     repetido=true;
                 aux=aux.siguiente;
             }
             if(repetido)
-                return false;
-            
-            aux.siguiente=new Encabezado<>(encabezado, columnas+1,true);
+            	return null;
+            aux.siguiente=new Encabezado<>(encabezado, columnas,true);
+            columnas++;
+            return aux.siguiente;
         }
-        columnas++;
-        return true;
     }
     /**
      * Agrega una nueva fila a la matriz con el cuidado que el encabezado no este repetido.
      * @param encabezado la etiqueta para identificar la fila
-     * @return <tt>true</tt> si la insercion fue exitosa
-     * <tt>false</tt> si el encabezado estaba repetido
+     * @return un encabezado si la insercion fue exitosa
+     * <tt>null</tt> si el encabezado estaba repetido
      */
-    public boolean addRow(String encabezado)
+    public Encabezado<T, S> addRow(String encabezado)
     {
         if(filasVacias())
         {
             raiz_filas=new Encabezado<>(encabezado, filas,false);
+            filas++;
+            return raiz_filas;
         }
         else
         {
@@ -87,16 +91,19 @@ public class Matriz <T,S>{
             boolean repetido=false;
             while(aux.siguiente!=null&&!repetido)
             {
-                if(aux.header.toLowerCase().equals(encabezado))
+                if(aux.header.toLowerCase().equals(encabezado.toLowerCase()))
                     repetido=true;
                 aux=aux.siguiente;
             }
             if(repetido)
-                return false;
-            aux.siguiente=new Encabezado<>(encabezado, filas+1,false);
+            {
+            	System.out.println("hubo repetido");
+                return null;
+            }
+            aux.siguiente=new Encabezado<>(encabezado, filas,false);
+            filas++;
+            return aux.siguiente;
         }
-        filas++;
-        return true;
     }
     /**
      * Agrega una nueva fila a la matriz con el cuidado que el encabezado no este repetido.
@@ -105,11 +112,13 @@ public class Matriz <T,S>{
      * @return <tt>true</tt> si la insercion fue exitosa
      * <tt>false</tt> si el encabezado estaba repetido
      */
-    public boolean addRow(String encabezado, T item)
+    public Encabezado<T, S> addRow(String encabezado, T item)
     {
         if(filasVacias())
         {
             raiz_filas=new Encabezado<>(encabezado, filas,false,item);
+            filas++;
+            return raiz_filas;
         }
         else
         {
@@ -117,16 +126,16 @@ public class Matriz <T,S>{
             boolean repetido=false;
             while(aux.siguiente!=null&&!repetido)
             {
-                if(aux.header.toLowerCase().equals(encabezado))
+                if(aux.header.toLowerCase().equals(encabezado.toLowerCase()))
                     repetido=true;
                 aux=aux.siguiente;
             }
             if(repetido)
-                return false;
-            aux.siguiente=new Encabezado<>(encabezado, filas+1,false,item);
+                return null;
+            aux.siguiente=new Encabezado<>(encabezado, filas,false,item);
+            filas++;
+            return aux.siguiente;
         }
-        filas++;
-        return true;
     }
     
     /**
@@ -141,38 +150,25 @@ public class Matriz <T,S>{
      */
     public boolean addCell(String encabezado_columna, String encabezado_fila, S item, boolean crear)
     {
-        Encabezado<T,S> col_aux=raiz_columnas;
-        boolean encontrado=false;
-        while(col_aux!=null&&!encontrado)
-        {
-            if(col_aux.header.toLowerCase().equals(encabezado_columna))
-                encontrado=true;
-            else
-                col_aux=col_aux.siguiente;
-        }
-        if(col_aux==null&&crear)
-        {
-        	addColumn(encabezado_columna);
-        	return addCell(encabezado_columna, encabezado_fila, item, crear);
-        }
-        if(!encontrado||col_aux==null)
-            return false;
-        Encabezado<T,S> row_aux=raiz_filas;
-        encontrado=false;
-        while(row_aux!=null&&!encontrado)
-        {
-            if(row_aux.header.toLowerCase().equals(encabezado_fila))
-                encontrado=true;
-            else
-                row_aux=row_aux.siguiente;
-        }
+    	Encabezado<T,S> row_aux=getHeader(encabezado_fila, false);
         if(row_aux==null&&crear)
         {
-        	addRow(encabezado_fila);
-        	return addCell(encabezado_columna, encabezado_fila, item, crear);
+        	row_aux=addRow(encabezado_fila);
+        	addColumn(encabezado_fila);
+        	//return addCell(encabezado_columna, encabezado_fila, item, crear);
         }
-        if(!encontrado||row_aux==null)
+        if(row_aux==null)
             return false;
+        Encabezado<T,S> col_aux=getHeader(encabezado_columna, true);
+        if(col_aux==null&&crear)
+        {
+        	col_aux=addColumn(encabezado_columna);
+        	addRow(encabezado_columna);
+        	//return addCell(encabezado_columna, encabezado_fila, item, crear);
+        }
+        if(col_aux==null)
+            return false;
+        
         int column=col_aux.index;
         int row=row_aux.index;
         NodoOrto<S> nuevo=new NodoOrto<>(item,column,row);
@@ -347,30 +343,124 @@ public class Matriz <T,S>{
         String codigo="";
         if(fila==null||fila.raiz==null)
             return codigo;
-        /*NodoOrto<S> celda=fila.raiz;
+        NodoOrto<S> celda=fila.raiz;
         while(celda!=null)
         {
             codigo+=celda.toString();
             celda=celda.right;
-        }*/
-        NodoOrto<S> celda=fila.raiz;
-        for(int i=0;i<columnas;i++)
-        {
-        	if(celda!=null&&celda.col!=i)
-        	{
-        		if(i+1<columnas)
-        		{
-	        		codigo+="n"+fila.index+"_"+i+"[label=\"\",color=white];\n";
-	        		codigo+="n"+fila.index+"_"+i+"->n"+fila.index+"_"+(i+1)+"[color=transparent];\n";
-        		}
-        	}
-        	else if(celda!=null)
-        	{
-        		codigo+=celda.toString();
-        		celda=celda.right;
-        	}
         }
         return codigo;
     }
+    
+    public String graficaAdyacencia() {
+    	String codigo="";
+    	codigo+="graph G{\n";
+    	codigo+="node[shape=plaintext];\n";
+    	codigo+="matriz[label=<<table border=\"0\" cellspacing=\"0\" cellborder=\"1\">];\n";
+    	codigo+="<tr>\n";
+    	for(int i=-1;i<columnas;i++)//generamos primero los encabezados, y una esquina
+    	{
+    		codigo+="<td width=\"50\" height=\"50\" fixedsize=\"true\">";
+    		codigo+=getHeader(i, true);
+    		codigo+="</td>";
+    	}
+    	codigo+="</tr>\n";
+    	Encabezado<T, S> fila_actual=raiz_filas;
+    	NodoOrto<S> celda_actual;
+    	for(int i=0;i<filas;i++)
+    	{
+    		celda_actual=fila_actual.raiz;
+    		codigo+="<tr>\n";
+    		codigo+="<td width=\"50\" height=\"50\" fixedsize=\"true\">";
+    		codigo+=fila_actual.header;
+    		codigo+="</td>\n";
+    		for(int j=0;j<columnas;j++)
+    		{
+    			codigo+="<td width=\"50\" height=\"50\" fixedsize=\"true\">";
+    			if(celda_actual!=null&&celda_actual.col==j)
+    			{
+    				codigo+=celda_actual.item.toString();
+    				celda_actual=celda_actual.right;
+    			}
+    			else
+    				codigo+="0";
+    			codigo+="</td>\n";
+    		}
+    		codigo+="</tr>\n";
+    		fila_actual=fila_actual.siguiente;
+    	}
+    	codigo+="</table>>];\n}";
+    	return codigo;
+    }
+    private String getHeader(int index, boolean columna)
+    {
+    	if((index<0||index>=columnas)&&columna)//se espera matriz cuadrada asi que filas=columnas
+    		return "";
+    	if((index<0||index>=filas)&&!columna)//se espera matriz cuadrada asi que filas=columnas
+    		return "";
+    	if(columna)
+    	{
+    		Encabezado<T,S> aux_columna=raiz_columnas;
+    		for(int i=0;i<index;i++)
+    		{
+    			aux_columna=aux_columna.siguiente;
+    		}
+    		return aux_columna.header;
+    	}
+    	else
+    	{
+    		Encabezado<T,S> aux_fila=raiz_filas;
+    		for(int i=0;i<index;i++)
+    		{
+    			aux_fila=aux_fila.siguiente;
+    		}
+    		return aux_fila.header;
+    	}
+    }
+    private Encabezado<T, S> getHeader(String header, boolean columna)
+    {
+    	if(columna)
+    	{
+    		Encabezado<T,S> aux_columna=raiz_columnas;
+    		boolean encontrado=false;
+    		while(aux_columna!=null&&!encontrado)
+    		{
+    			if(aux_columna.header.toLowerCase().equals(header.toLowerCase()))
+    				encontrado=true;
+    			else
+    				aux_columna=aux_columna.siguiente;
+    		}
+    		return aux_columna;
+    	}
+    	else
+    	{
+    		Encabezado<T,S> aux_fila=raiz_filas;
+    		boolean encontrado=false;
+    		while(aux_fila!=null&&!encontrado)
+    		{
+    			if(aux_fila.header.toLowerCase().equals(header.toLowerCase()))
+    				encontrado=true;
+    			else
+    				aux_fila=aux_fila.siguiente;
+    		}
+    		return aux_fila;
+    	}
+    }
+    public T getHeader(String header)
+    {
+    	Encabezado<T,S> aux_fila=raiz_filas;
+		boolean encontrado=false;
+		while(aux_fila!=null&&!encontrado)
+		{
+			if(aux_fila.header.toLowerCase().equals(header.toLowerCase()))
+				encontrado=true;
+			else
+				aux_fila=aux_fila.siguiente;
+		}
+		if(aux_fila==null)
+			return null;		
+		return aux_fila.item;
+    }
+    
 
 }

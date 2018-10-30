@@ -25,6 +25,7 @@ public class Encabezado <T,S>{
         this.header = header;
         this.index = index;
         this.columna=columna;
+        item=null;
         raiz=null;
         siguiente=null;
     }
@@ -67,8 +68,6 @@ public class Encabezado <T,S>{
             if(raiz!=null)
             {
                 codigo+=id+"->n"+raiz.id()+"[dir=both];\n";
-                if(raiz.row>0)
-                	codigo+=id+"->n0_"+index+"[color=transparent];\n";
             }
             
         }
@@ -80,8 +79,6 @@ public class Encabezado <T,S>{
             {
                 codigo+="{rank=same;\n";
                 codigo+=id+"->n"+raiz.id()+"[dir=both,weight=0];\n";   
-                if(raiz.col>0)
-                	codigo+=id+"->n"+index+"_0"+"[color=transparent];\n";
                 codigo+="};\n";
             }
         }

@@ -40,5 +40,14 @@ public class MiscResource {
 	{
 		return Response.status(Status.OK).entity(service.graficaArbolB()).build();
 	}
+	
+	@GET
+	@Path("/matrizady")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response codigoMatrizAdyacencia()
+	{
+		return Response.status(Status.OK).entity(service.codigoMatrizAdyacencia()).build();
+	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.jocaqes.Estructura.ArbolB;
 import org.jocaqes.Estructura.Grafo;
+import org.jocaqes.Misc.Curso;
 import org.jocaqes.Misc.CursoP;
 import org.jocaqes.Misc.DataBase;
 import org.jocaqes.Misc.Estudiante;
@@ -29,6 +30,7 @@ public class AdminService {
 	 */
 	public boolean agregar(Estudiante nuevo, int carne)
 	{
+		actualizarCreditos(nuevo);
 		return arbol_b.add(nuevo, carne);
 	}
 	/**
@@ -41,6 +43,18 @@ public class AdminService {
 		return arbol_b.buscar(carne);
 	}
 	
+	
+	public boolean modificar(Estudiante modificado, int carne)
+	{
+		Estudiante previo = arbol_b.buscar(carne);
+		if(previo==null)
+			return false;
+		modificado.setToken(previo.getToken());
+		modificado.setCreditos(previo.getCreditos());
+		modificado.setCursos(previo.getCursos());
+		return arbol_b.modificar(carne, modificado);//honestamente busca 2 veces, pero es arbol b asi que que importa
+	}
+	
 	/**
 	 * Toma todos los estudiantes de una lista y los agrega al arbol B
 	 * @param estudiantes lista que contiene los estudiantes a almacenar
@@ -50,6 +64,7 @@ public class AdminService {
 		while(!estudiantes.isEmpty())
 		{
 			Estudiante nuevo=estudiantes.remove(0);
+			actualizarCreditos(nuevo);
 			arbol_b.add(nuevo, nuevo.getCarnet());
 		}
 	}
@@ -57,8 +72,10 @@ public class AdminService {
 	 * Toma todos los cursos de una lista y los agrega en un grafo
 	 * @param cursos lista de todos los cursos que se desean guardar en el pensum 
 	 */
-	public void cargarCursos(List<CursoP> cursos)
+	public boolean cargarCursos(List<CursoP> cursos)
 	{
+		if(cursos.isEmpty())
+			return false;
 		for(CursoP curso:cursos)
 		{
 			pensum.agregarEncabezado(curso.getCodigo(), curso);
@@ -68,11 +85,17 @@ public class AdminService {
 			CursoP nuevo=cursos.remove(0);
 			pensum.agregarPre(nuevo);
 		}
+		return true;
 	}
-	
-	public String debug()
+	private void actualizarCreditos(Estudiante estudiante)
 	{
-		return pensum.codigoGrafo();
+		List<Curso> cursos=estudiante.getCursos();
+		int creditos=0;
+		for(Curso curso:cursos)
+		{
+			creditos+=pensum.getCreditos(curso.getCodigo());
+		}
+		estudiante.setCreditos(creditos);
 	}
 	
 }

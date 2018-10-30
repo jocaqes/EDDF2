@@ -1,6 +1,7 @@
 package org.jocaqes.EDDF2.services;
 
 import org.jocaqes.Estructura.ArbolB;
+import org.jocaqes.Estructura.Grafo;
 import org.jocaqes.Misc.DataBase;
 import org.jocaqes.Misc.Estudiante;
 
@@ -11,6 +12,7 @@ import org.jocaqes.Misc.Estudiante;
  */
 public class MiscService {
 	private ArbolB<Estudiante> arbol_b=DataBase.getBtreeEstudiantes();
+	private Grafo pensum=DataBase.getPensum();
 	
 	/**
 	 * Busca un estudiante por su carne y luego verifica si la contraseña
@@ -39,6 +41,10 @@ public class MiscService {
 		return arbol_b.grafica();
 	}
 	
+	public String codigoMatrizAdyacencia()
+	{
+		return pensum.codigoMatriz();
+	}
 	
 	
 	/**

@@ -44,12 +44,24 @@ public class ArbolBservlet extends HttpServlet {
 		{
 			agregar(request,response);
 		}
+		else if(tipo_request.equals("search"))
+		{
+			buscar(request,response);
+		}
+		else if(tipo_request.equals("modify"))
+		{
+			modificar(request,response);
+		}
 		else
 		{
 			response.sendRedirect("estudiantes.jsp");
 		}
 	}
 	
+
+
+
+
 	private void agregar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		String nombre=request.getParameter("nombre");
@@ -76,6 +88,68 @@ public class ArbolBservlet extends HttpServlet {
 			request.getRequestDispatcher("estudiantes.jsp").forward(request, response);
 		}
 		
+	}
+	
+	private void buscar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		String carnet_=request.getParameter("carne");
+		int carnet=toInt(carnet_);
+		if(carnet<0)
+		{
+			request.setAttribute("modificar", "Este campo solo acepta formato numerico");
+			request.getRequestDispatcher("estudiantes.jsp").forward(request, response);
+		}
+		else
+		{
+			WebTarget buscar=RestClient.getAdmin_target()
+					.path("buscar/{carne}");
+			Response respuesta = buscar
+					.resolveTemplate("carne", carnet)
+					.request(MediaType.APPLICATION_JSON)
+					.get();
+			int status=respuesta.getStatus();
+			if(status==Status.FOUND.getStatusCode())
+			{
+				Estudiante encontrado = respuesta.readEntity(Estudiante.class);
+				request.setAttribute("modificar", formModificar(encontrado));
+				request.getRequestDispatcher("estudiantes.jsp").forward(request, response);
+			}
+			else//Status.NOT_FOUND
+			{
+				request.setAttribute("modificar", "No se encontro al estudiante");
+				request.getRequestDispatcher("estudiantes.jsp").forward(request, response);
+			}
+		}
+	}
+	
+	private void modificar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+		String carnet_=request.getParameter("carne");
+		int carnet=Integer.parseInt(carnet_);
+		String nombre=request.getParameter("nombre");
+		String apellidos=request.getParameter("apellidos");
+		double dpi=Double.parseDouble(request.getParameter("dpi"));
+		String correo=request.getParameter("password");
+		String password=request.getParameter("password");
+		int creditos=Integer.parseInt(request.getParameter("creditos"));
+		String token=request.getParameter("token");
+		Estudiante modificado=new Estudiante(carnet, dpi, password, token, nombre, apellidos, creditos, correo);
+		WebTarget modifi=RestClient.getAdmin_target()
+				.path("modificar");
+		Response respuesta = modifi
+				.request(MediaType.TEXT_PLAIN)
+				.put(Entity.json(modificado));
+		int status=respuesta.getStatus();
+		if(status==Status.ACCEPTED.getStatusCode())
+		{
+			request.setAttribute("resultado", respuesta.readEntity(String.class));
+			request.getRequestDispatcher("estudiantes.jsp").forward(request, response);
+		}
+		else//Status.BAD_REQUEST
+		{
+			request.setAttribute("resultado", "No se pudo modificar el estudiante");
+			request.getRequestDispatcher("estudiantes.jsp").forward(request, response);
+		}
 	}
 
 	
@@ -110,6 +184,53 @@ public class ArbolBservlet extends HttpServlet {
 			request.getRequestDispatcher("estudiantes.jsp").forward(request, response);
 		}
 		//return output;
+	}
+	
+	
+	
+	
+	
+	
+	
+	private String formModificar(Estudiante a_modificar)
+	{
+
+		String dpi = new java.math.BigDecimal(a_modificar.getDpi()).toPlainString();
+		String out="Carnet:"+a_modificar.getCarnet(); 
+		out+="<form method=\"post\" action=\"estudiantes\">" + 
+				"Nombre:<br>" + 
+				"<input type=\"text\" name=\"nombre\" value=\""+a_modificar.getNombre()+"\"><br>" + 
+				"Apellidos:<br>" + 
+				"<input type=\"text\" name=\"apellidos\" value=\""+a_modificar.getApellidos()+"\"><br>" + 
+				"DPI:<br>" + 
+				"<input type=\"text\" name=\"dpi\" value=\""+dpi+"\"><br>" + 
+				"Correo:<br>" + 
+				"<input type=\"email\" name=\"correo\" value=\""+a_modificar.getCorreo()+"\"><br>" + 
+				"Contraseña:<br>" + 
+				"<input type=\"text\" name=\"password\" value=\""+a_modificar.getPassword()+"\"><br>" +
+				"<input type=\"hidden\" name=\"tipo\" value=\"modify\">"+
+				"<input type=\"hidden\" name=\"carne\" value=\""+a_modificar.getCarnet()+"\">"+
+				"<input type=\"hidden\" name=\"creditos\" value=\""+a_modificar.getCreditos()+"\">"+
+				"<input type=\"hidden\" name=\"token\" value=\""+a_modificar.getToken()+"\">"+
+				"<input type=\"submit\" name=\"modificar\" value=\"Modificar\">"+
+				"</form>";
+		return out;
+	}
+	
+	private int toInt(String numero)
+	{
+		int out=-1;
+		if(numero==null||numero.isEmpty())
+			return out;
+		try
+		{
+			out=Integer.parseInt(numero);
+			return out;
+		}catch(NumberFormatException e)
+		{
+			System.out.println("En ControlAdmin->buscarEstudiante:"+e.getMessage());
+			return out;
+		}
 	}
 
 }

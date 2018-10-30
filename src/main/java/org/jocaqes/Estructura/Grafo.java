@@ -21,7 +21,7 @@ public class Grafo {
 	 */
 	public void agregarEncabezado(String encabezado, CursoP item)
 	{
-		if(matriz_adyacencia.addRow(encabezado,item))
+		if(matriz_adyacencia.addRow(encabezado,item)!=null)
 			matriz_adyacencia.addColumn(encabezado);
 	}
 	/**
@@ -36,11 +36,24 @@ public class Grafo {
 			matriz_adyacencia.addCell(columna, curso.getCodigo(), "1",true);
 		}
 	}
-	
-	public String codigoGrafo()
+	/**
+	 * Recupera el codigo en graphviz del grafo representado como matriz de adyacencia
+	 * @return una cadena con codigo en formato de graphviz
+	 */
+	public String codigoMatriz()
 	{
-		return matriz_adyacencia.graficaDispersa();
+		return matriz_adyacencia.graficaAdyacencia();
 	}
+	
+	public int getCreditos(String codigo_curso)
+	{
+		CursoP curso=matriz_adyacencia.getHeader(codigo_curso);
+		if(curso==null)
+			return 0;
+		return curso.getCreditos();
+	}
+	
+	
 	
 
 }

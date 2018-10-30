@@ -53,15 +53,11 @@ public class NodoOrto <S>{
             codigo+=id+"->n"+up.id()+"[weight=0];\n";*/
         if(down!=null)
         {
-        	if((up==null&&row>1)||(up!=null&&up.row!=row-1))
-        		codigo+=id+"->n"+(row-1)+"_"+col+"[color=transparent];\n";
     		codigo+=id+"->n"+down.id()+"[dir=both];\n";
         }
         if(right!=null)
         {
             codigo+="{rank=same;\n";
-            if((left==null&&col>1)||(left!=null&&left.col!=col-1))
-            	codigo+=id+"->n"+row+"_"+(col-1)+"[color=transparent];\n";
             codigo+=id+"->n"+right.id()+"[dir=both];\n";
             codigo+="};\n";
         }

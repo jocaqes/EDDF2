@@ -1,3 +1,4 @@
+<%@page import="org.jocaqes.Misc.Estudiante"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -51,14 +52,30 @@
 		</form>
 		${mensaje }
 	</fieldset>
+	<br>
+	<fieldset>
+	<legend>Modificar Estudiante</legend>
+		<form method="post" action="estudiantes">
+			Carnet:<br>
+			<input type="text" name="carne"><br>
+			<input type="hidden" name="tipo" value="search">
+			<input type="submit" name="boton_buscar" value="Buscar">
+		</form>
+		<br>
+		<br>
+		${modificar }
+		${resultado }
+	</fieldset>	
 	
-	
+	<fieldset>
+	<legend>Grafica</legend>
 	<form method="get" action="graph">
 		<input type="hidden" name="tipo" value="btree"> 
 		<input type="submit" value="Graficar">
 	</form>
 	<br>
 	${imagen }
+	</fieldset>
 
 
 </body>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Administracion</title>
 </head>
 <body>
 <%
@@ -17,6 +17,25 @@
 	<br>
 	<jsp:include page="Sidebar.jsp"/>
 	<br>
+	<fieldset>
+		<legend>Carga Pensum</legend>
+		<form method="post" action="pensum">
+			Ruta del archivo:<br>
+			<input type="text" name="ruta">
+			<input type="hidden" name="tipo" value="load">
+			<input type="submit" value="OK"> 
+		</form>
+		${mensaje }
+	</fieldset>
+	<fieldset>
+	<legend>Grafica</legend>
+	<form method="post" action="pensum">
+		<input type="hidden" name="tipo" value="graph"> 
+		<input type="submit" value="Graficar">
+	</form>
+	</fieldset>
+	<br>
+	${imagen }
 
 </body>
 </html>

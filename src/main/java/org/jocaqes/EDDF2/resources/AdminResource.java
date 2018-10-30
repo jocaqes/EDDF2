@@ -46,24 +46,15 @@ public class AdminResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscarEstudiante(@PathParam("carne") int carne)
 	{
+		
 		Estudiante encontrado=service.buscar(carne);
 		if(encontrado!=null)
 			return Response.status(Status.FOUND).entity(encontrado).build();
 		else
 			return Response.status(Status.NOT_FOUND).entity("{\"error\":\"el estudiante no existe\"}").build();
+			
 	}
 	
-	/*
-	@GET
-	@Path("/login/{carne}/{password}")
-	@Consumes(MediaType.TEXT_PLAIN)
-	@Produces(MediaType.TEXT_PLAIN)
-	public Response loginEstudiante(@PathParam("carne") int carne, @PathParam("password") String password)
-	{
-		if(service.login(carne, password))
-			return Response.status(Status.ACCEPTED).entity(true).build();
-		return Response.status(Status.UNAUTHORIZED).entity(false).build();
-	}*/
 
 	
 	@POST
@@ -80,10 +71,14 @@ public class AdminResource {
 	}
 				
 	@PUT
+	@Path("/modificar")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response modificarEstudiante(Estudiante estudiante)
 	{
-		return Response.status(Status.NOT_IMPLEMENTED).entity("Esta funcion no esta implementada aun").build();
+		if(service.modificar(estudiante, estudiante.getCarnet()))
+			return Response.status(Status.ACCEPTED).entity("Modificacion exitosa!!").build();
+		return Response.status(Status.BAD_REQUEST).entity("Error al modificar el estudiante").build();
 	}
 	
 	@POST
@@ -92,9 +87,8 @@ public class AdminResource {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response cargarPensum(Cursos cursos)
 	{
-		service.cargarCursos(cursos.getCursos());
-		return Response.status(Status.CREATED).entity(service.debug()).build();
-		//return Response.status(Status.CREATED).entity(cursos).build();
+		if(service.cargarCursos(cursos.getCursos()))
+			return Response.status(Status.CREATED).entity("Carga de cursos realizada con Exito!!").build();
+		return Response.status(Status.BAD_REQUEST).entity("El archivo esta vacio").build();
 	}
-		
 }

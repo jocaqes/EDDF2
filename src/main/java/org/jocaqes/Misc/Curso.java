@@ -10,11 +10,11 @@ public class Curso {
 	public String nombre;
 	public int nota;
 	public String fecha;
-	public int codigoCurso;
+	public String codigoCurso;
 	
 	public Curso(){}
 		
-	public Curso(String nombre, int nota, String fecha, int codigo) {
+	public Curso(String nombre, int nota, String fecha, String codigo) {
 		this.nombre = nombre;
 		this.nota = nota;
 		this.fecha = fecha;
@@ -39,16 +39,17 @@ public class Curso {
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
-	public int getCodigo() {
+	public String getCodigo() {
 		return codigoCurso;
 	}
-	public void setCodigo(int codigo) {
+	public void setCodigo(String codigo) {
 		this.codigoCurso = codigo;
 	}
 
 	@Override
 	public int hashCode() {//usada para facilitar sortedAdd en lista ordenada de cursos
-		return this.codigoCurso;
+		int codigo=Integer.parseInt(codigoCurso);
+		return codigo;
 	}
 	
 	
