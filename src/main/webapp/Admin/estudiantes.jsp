@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="adminStyle.css">
 <meta charset="UTF-8">
 <title>Administracion</title>
 </head>
@@ -19,6 +20,17 @@
 	<h1>Estudiantes</h1>
 	<br>
 	<jsp:include page="Sidebar.jsp"/>
+	<br>
+	<fieldset>
+	<legend>Cargar Estudiantes</legend>
+		<form method="post" action="estudiantes">
+			Ruta del archivo:<br>
+			<input type="text" name="ruta"><br>
+			<input type="hidden" name="tipo" value="load"> 
+			<input type="submit" value="OK">
+		</form>
+		${mensaje }
+	</fieldset>
 	<br>
 	<fieldset>
 		<legend>Agregar Estudiante</legend>
@@ -43,17 +55,6 @@
 	</fieldset>
 	<br>
 	<fieldset>
-	<legend>Cargar Estudiantes</legend>
-		<form method="post" action="estudiantes">
-			Ruta del archivo:<br>
-			<input type="text" name="ruta"><br>
-			<input type="hidden" name="tipo" value="load"> 
-			<input type="submit" value="OK">
-		</form>
-		${mensaje }
-	</fieldset>
-	<br>
-	<fieldset>
 	<legend>Modificar Estudiante</legend>
 		<form method="post" action="estudiantes">
 			Carnet:<br>
@@ -74,9 +75,12 @@
 		<input type="submit" value="Graficar">
 	</form>
 	<br>
+	<div class="zoom">
 	${imagen }
+	</div>
 	</fieldset>
-
+	
+	
 
 </body>
 </html>

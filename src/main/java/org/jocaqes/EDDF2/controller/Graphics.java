@@ -37,12 +37,12 @@ public class Graphics extends HttpServlet {
 			String nombre="arbolB";//nombre del archivo
 			String codigo=respuesta.readEntity(String.class);//recuperamos codigo graphviz
 			String path=getServletContext().getRealPath("/Imagenes");//conseguimos path para guardar el archivo
-			Archivo.generarGrafica(path, "arbolB", codigo);//generamos la grafica
+			Archivo.generarGrafica(path, nombre, codigo);//generamos la grafica
 			String base64 = Archivo.graficaBase64(path, nombre);//recuperamos la grafica en base64
 			if(base64!=null)//si todo salio bien
 			{
 				String imagen="<img src=\"data:image/png;base64, ";
-				imagen+=base64+"\" alt=\"Imagen no disponible\" width=\"100%\"/>";
+				imagen+=base64+"\" alt=\"Imagen no disponible\"/>";
 				request.setAttribute("imagen", imagen);//generamos un string para imagen html y lo agregamos como atributo
 			}
 		}

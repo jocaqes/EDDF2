@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.jocaqes.Estructura.ArbolB;
 import org.jocaqes.Estructura.Grafo;
+import org.jocaqes.Estructura.Lista;
 import org.jocaqes.Misc.Curso;
 import org.jocaqes.Misc.CursoP;
 import org.jocaqes.Misc.DataBase;
@@ -17,6 +18,7 @@ import org.jocaqes.Misc.Estudiante;
 public class AdminService {
 	private ArbolB<Estudiante> arbol_b=DataBase.getBtreeEstudiantes();
 	private Grafo pensum=DataBase.getPensum();
+	private Lista<Estudiante> posibles_tutores=DataBase.getPosiblesTutores();
 	
 	public AdminService() {}
 	
@@ -31,6 +33,8 @@ public class AdminService {
 	public boolean agregar(Estudiante nuevo, int carne)
 	{
 		actualizarCreditos(nuevo);
+		if(nuevo.getCreditos()>=100)
+			posibles_tutores.add(nuevo);
 		return arbol_b.add(nuevo, carne);
 	}
 	/**
@@ -65,6 +69,8 @@ public class AdminService {
 		{
 			Estudiante nuevo=estudiantes.remove(0);
 			actualizarCreditos(nuevo);
+			if(nuevo.getCreditos()>=100)
+				posibles_tutores.add(nuevo);
 			arbol_b.add(nuevo, nuevo.getCarnet());
 		}
 	}
@@ -97,5 +103,6 @@ public class AdminService {
 		}
 		estudiante.setCreditos(creditos);
 	}
+	
 	
 }

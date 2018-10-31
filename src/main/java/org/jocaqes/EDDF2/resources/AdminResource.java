@@ -91,4 +91,5 @@ public class AdminResource {
 			return Response.status(Status.CREATED).entity("Carga de cursos realizada con Exito!!").build();
 		return Response.status(Status.BAD_REQUEST).entity("El archivo esta vacio").build();
 	}
+	
 }

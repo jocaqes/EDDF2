@@ -461,6 +461,10 @@ public class Matriz <T,S>{
 			return null;		
 		return aux_fila.item;
     }
+    public Encabezado<T, S> getRaizFila()
+    {
+    	return raiz_filas;
+    }
     
 
 }

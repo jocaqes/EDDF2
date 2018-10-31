@@ -137,6 +137,21 @@ public class AVL<T> {
     		return null;
     	return coincidencia.item;
     }
+    
+    /**
+     * Permite buscar dentro del arbol avl el item bajo la llave proporcionada, de estar vacio
+     * el arbol siempre dara como resultado una busqueda infructuosa
+     * @param llave el parametro para buscar en el arbol
+     * @return <tt>true</tt> si se encontro un item con la llave proporcionada, <tt>false</tt>
+     * en caso contrario
+     */
+    public boolean existe(int llave)
+    {
+    	Nodo<T> coincidencia=search(raiz,llave);
+    	if(coincidencia==null)
+    		return false;
+    	return true;
+    }
        
     private Nodo<T> search(Nodo<T> raiz, int llave)
     {
@@ -313,30 +328,21 @@ public class AVL<T> {
         }
     }
     
-    public void debug(Nodo<T> raiz,String prefijo)
-    {
-        if(raiz!=null)
-        {
-            System.out.println(prefijo+raiz.llave+"fe:"+raiz.fe);
-            debug(raiz.izq,"izq:");
-            debug(raiz.der,"der:");
-        }
-        
-    }
     
     /**
-     *Permite graficar el arbol avl con la herramienta graphviz
-     * @param url la ubicacion final del archivo
+     * Genera codigo que representa al arbol con un formato apto para graphviz
+     * si el arbol estuviese vacio la grafica es vacia pero no genera ningun error
+     * @return Una cadena en formato apto para graphviz
      */
-    /*public void graficar(String url)
+    public String graficar()
     {
         String codigo="digraph G{\n";
         codigo+=codigoNodos(raiz);
         codigo+="}";
-        Archivo.graficar(codigo, url);
-    }*/
+        return codigo;
+    }
     
-    /*
+    
     private String codigoNodos(Nodo<T> raiz)
     {
         String codigo="";
@@ -347,7 +353,7 @@ public class AVL<T> {
             codigo+=codigoNodos(raiz.der);
         }
         return codigo;
-    }*/
+    }
     
     /**
      * Realiza una actualizacion de los factores de equilibrio de la raiz y sus hijos 

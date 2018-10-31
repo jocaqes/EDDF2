@@ -73,7 +73,7 @@ public class Nodo <T>{
    public String toString() {
        String codigo="";
        String id="n"+this.hashCode();
-       codigo+=id+"[label=\""+llave+"fe:"+fe+"item:"+item.toString()+"\"];\n";
+       codigo+=id+"[label=\""+item.toString()+"\"];\n";
        //codigo+=id+"[label=\""+llave+"\"];\n";
        if(izq!=null)
        {

@@ -51,4 +51,14 @@
     <servlet-name>Pensumservlet</servlet-name>
     <url-pattern>/pensum</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ATutoresServlet</display-name>
+    <servlet-name>ATutoresServlet</servlet-name>
+    <servlet-class>org.jocaqes.EDDF2.controller.ATutoresServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ATutoresServlet</servlet-name>
+    <url-pattern>/tutores</url-pattern>
+  </servlet-mapping>
 </web-app>

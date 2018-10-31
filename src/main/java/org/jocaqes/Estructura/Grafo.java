@@ -53,6 +53,22 @@ public class Grafo {
 		return curso.getCreditos();
 	}
 	
+	public String getCursos()
+	{
+		Encabezado<CursoP,String> aux = matriz_adyacencia.getRaizFila();
+		String select="";
+		while(aux!=null)
+		{
+			select+="<option>";
+			if(aux.item!=null)
+				select+=aux.item.getNombre();
+			else
+				select+=aux.header;
+			select+="</option>\n";
+			aux=aux.siguiente;
+		}
+		return select;
+	}
 	
 	
 
