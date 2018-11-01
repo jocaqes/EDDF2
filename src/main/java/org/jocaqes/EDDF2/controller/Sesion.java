@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.jocaqes.EDDF2.restclient.RestClient;
+import org.jocaqes.Misc.DataBase;
 
 /**
  * Servlet implementation class SessionServlet; para el manejo de login
@@ -65,9 +66,13 @@ public class Sesion extends HttpServlet {
 				int status = respuesta.getStatus();
 				if(status==Status.ACCEPTED.getStatusCode())//match entre usuario y password
 				{
+					int carne=Integer.parseInt(usuario);
 					HttpSession session = request.getSession(false);
 					session.setAttribute("user", usuario);
-					response.sendRedirect("test.jsp");
+					if(DataBase.getTutores().existe(carne))
+						response.sendRedirect("Tutor/homeTutor.jsp");
+					else
+						response.sendRedirect("test.jsp");
 				}
 				else//aqui es un Status.UNAUTHORIZED pero la verdad es irrelevante porque no puedo dejar que la pagina se caiga
 				{

@@ -20,7 +20,10 @@ public class RestClient {
 	 * El path inicial para peticiones miscelaneas
 	 */
 	private static WebTarget misc_target = cliente.target("http://localhost:8080/EDDF2/webapi/misc/");
-	
+	/**
+	 * El path inicial para peticiones de tutores
+	 */
+	private static WebTarget tutor_target = cliente.target("http://localhost:8080/EDDF2/webapi/Tutor/");
 	
 	public static WebTarget getAdmin_target() {
 		return admin_target;
@@ -30,6 +33,13 @@ public class RestClient {
 	public static WebTarget getMisc_target() {
 		return misc_target;
 	}
+
+
+	public static WebTarget getTutor_target() {
+		return tutor_target;
+	}
+	
+	
 	
 	
 }

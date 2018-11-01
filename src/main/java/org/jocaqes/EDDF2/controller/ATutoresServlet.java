@@ -99,18 +99,16 @@ public class ATutoresServlet extends HttpServlet {
 
 	private void graficaAVL(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String nombre="arbolavl";//nombre del archivo
+		String codigo=DataBase.getTutores().graficar();//recuperamos codigo graphviz
+		String path=getServletContext().getRealPath("/Imagenes");//conseguimos path para guardar el archivo
+		Archivo.generarGrafica(path, nombre, codigo);//generamos la grafica
+		String base64 = Archivo.graficaBase64(path, nombre);//recuperamos la grafica en base64
+		if(base64!=null)//si todo salio bien
 		{
-			String nombre="arbolavl";//nombre del archivo
-			String codigo=DataBase.getTutores().graficar();//recuperamos codigo graphviz
-			String path=getServletContext().getRealPath("/Imagenes");//conseguimos path para guardar el archivo
-			Archivo.generarGrafica(path, nombre, codigo);//generamos la grafica
-			String base64 = Archivo.graficaBase64(path, nombre);//recuperamos la grafica en base64
-			if(base64!=null)//si todo salio bien
-			{
-				String imagen="<img class=\"zoom\" src=\"data:image/png;base64, ";
-				imagen+=base64+"\" alt=\"Imagen no disponible\"/>";
-				request.setAttribute("graph", imagen);//generamos un string para imagen html y lo agregamos como atributo
-			}
+			String imagen="<img class=\"zoom\" src=\"data:image/png;base64, ";
+			imagen+=base64+"\" alt=\"Imagen no disponible\"/>";
+			request.setAttribute("graph", imagen);//generamos un string para imagen html y lo agregamos como atributo
 		}
 		request.getRequestDispatcher("tutores.jsp").forward(request, response);
 	}

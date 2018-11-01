@@ -5,11 +5,12 @@ package org.jocaqes.Estructura;
  * agregar metodos para manejar niveles
  * @author jocaqes
  *
- * @param <T> El valor que se espera guardar en los encabezados si es matriz de adyacencia
- * @param <S> El valor que se espera guardar en los nodos ortogonales, pueden ser iguales
+ * @param <T> El valor que se espera guardar en los encabezados de filas
+ * @param <S> El valor que se espera guardar en los nodos ortogonales
+ * @param <R> El valor que se espera guardar en los encabezados de columnas
  */
-public class Matriz <T,S>{
-    private Encabezado<T,S> raiz_columnas;
+public class Matriz <T,S,R>{
+    private Encabezado<R,S> raiz_columnas;
     private Encabezado<T,S> raiz_filas;
     public int columnas;
     public int filas;
@@ -46,7 +47,7 @@ public class Matriz <T,S>{
      * @return El nuevo encabezado si la insercion fue exitosa
      * <tt>null</tt> si el encabezado estaba repetido
      */
-    public Encabezado<T, S> addColumn(String encabezado)
+    public Encabezado<R, S> addColumn(String encabezado)
     {
         if(columnasVacias())
         {
@@ -56,7 +57,7 @@ public class Matriz <T,S>{
         }
         else
         {
-            Encabezado<T,S> aux=raiz_columnas;
+            Encabezado<R,S> aux=raiz_columnas;
             boolean repetido=false;
             while(aux.siguiente!=null&&!repetido)
             {
@@ -71,6 +72,39 @@ public class Matriz <T,S>{
             return aux.siguiente;
         }
     }
+    /**
+     * Agrega una nueva columna a la matriz con el cuidado que el encabezado no este repetido.
+     * @param encabezado la etiqueta para identificar la fila
+     * @param item el valor que se desea guardar en la columna
+     * @return <tt>true</tt> si la insercion fue exitosa
+     * <tt>false</tt> si el encabezado estaba repetido
+     */
+    public Encabezado<R,S> addColumn(String encabezado,R item)
+    {
+        if(columnasVacias())
+        {
+            raiz_columnas=new Encabezado<>(encabezado, columnas,true,item);
+            columnas++;
+            return raiz_columnas;
+        }
+        else
+        {
+            Encabezado<R,S> aux=raiz_columnas;
+            boolean repetido=false;
+            while(aux.siguiente!=null&&!repetido)
+            {
+                if(aux.header.toLowerCase().equals(encabezado.toLowerCase()))
+                    repetido=true;
+                aux=aux.siguiente;
+            }
+            if(repetido)
+            	return null;
+            aux.siguiente=new Encabezado<>(encabezado, columnas,true,item);
+            columnas++;
+            return aux.siguiente;
+        }
+    }
+    
     /**
      * Agrega una nueva fila a la matriz con el cuidado que el encabezado no este repetido.
      * @param encabezado la etiqueta para identificar la fila
@@ -108,7 +142,7 @@ public class Matriz <T,S>{
     /**
      * Agrega una nueva fila a la matriz con el cuidado que el encabezado no este repetido.
      * @param encabezado la etiqueta para identificar la fila
-     * @param item el valor que se desea guardar si es matriz de adyacencia
+     * @param item el valor que se desea guardar en la fila
      * @return <tt>true</tt> si la insercion fue exitosa
      * <tt>false</tt> si el encabezado estaba repetido
      */
@@ -150,7 +184,7 @@ public class Matriz <T,S>{
      */
     public boolean addCell(String encabezado_columna, String encabezado_fila, S item, boolean crear)
     {
-    	Encabezado<T,S> row_aux=getHeader(encabezado_fila, false);
+    	Encabezado<T,S> row_aux=getRowHeader(encabezado_fila);
         if(row_aux==null&&crear)
         {
         	row_aux=addRow(encabezado_fila);
@@ -159,7 +193,7 @@ public class Matriz <T,S>{
         }
         if(row_aux==null)
             return false;
-        Encabezado<T,S> col_aux=getHeader(encabezado_columna, true);
+        Encabezado<R,S> col_aux=getColumnHeader(encabezado_columna);
         if(col_aux==null&&crear)
         {
         	col_aux=addColumn(encabezado_columna);
@@ -249,7 +283,7 @@ public class Matriz <T,S>{
      * @param nuevo la nueva celda a insertar
      * @param columna la columna donde se desea insertar la celda
      */
-    private void addToCol(NodoOrto<S> nuevo, Encabezado<T,S> columna)
+    private void addToCol(NodoOrto<S> nuevo, Encabezado<R,S> columna)
     {
         if(columna.raiz==null)//esta vacia
         {
@@ -291,6 +325,36 @@ public class Matriz <T,S>{
             }
         }
     }
+    
+    
+    
+    public boolean eliminarColumna(String encabezado)
+    {
+    	Encabezado<R,S> aux=getColumnHeader(encabezado);
+    	if(aux==null)
+    		return false;
+    	NodoOrto<S> celda=aux.raiz;
+    	while(celda!=null)
+    	{
+    		if(celda.left!=null)
+    			celda.left.right=celda.right;
+    		if(celda.right!=null)
+    			celda.right.left=celda.left;
+    		celda=celda.down;
+    	}
+    	aux.raiz=null;
+    	if(aux.index==0)
+    		raiz_columnas=aux.siguiente;
+    	else
+    	{
+    		Encabezado<R,S> anterior=getColumnHeader(aux.index-1);
+    		anterior.siguiente=aux.siguiente;
+    	}
+    	return true;
+    }
+    
+    
+    
     /**
      * Genera un texto con la representacion grafica de la matriz en codigo
      * para graphviz
@@ -306,7 +370,7 @@ public class Matriz <T,S>{
         codigo+="}";
         return codigo;
     }
-    private String codigoColumnas(Encabezado<T,S> raiz)
+    private String codigoColumnas(Encabezado<R,S> raiz)
     {
         String codigo="";
         if(raiz==null)
@@ -315,7 +379,7 @@ public class Matriz <T,S>{
         codigo+="{rank=same;\n";
         codigo+="esquina->n"+raiz.hashCode()+"[color=transparent];\n";
         codigo+="};\n";
-        Encabezado<T,S> aux=raiz;
+        Encabezado<R,S> aux=raiz;
         while(aux!=null)
         {
             codigo+=aux.toString();
@@ -351,7 +415,10 @@ public class Matriz <T,S>{
         }
         return codigo;
     }
-    
+    /**
+     * Recupera codigo de graphviz que representa la matriz como una matriz de adyacencia
+     * @return una cadena con codigo en formato de graphviz
+     */
     public String graficaAdyacencia() {
     	String codigo="";
     	codigo+="graph G{\n";
@@ -400,7 +467,7 @@ public class Matriz <T,S>{
     		return "";
     	if(columna)
     	{
-    		Encabezado<T,S> aux_columna=raiz_columnas;
+    		Encabezado<R,S> aux_columna=raiz_columnas;
     		for(int i=0;i<index;i++)
     		{
     			aux_columna=aux_columna.siguiente;
@@ -417,34 +484,61 @@ public class Matriz <T,S>{
     		return aux_fila.header;
     	}
     }
-    private Encabezado<T, S> getHeader(String header, boolean columna)
+    private Encabezado<R,S> getColumnHeader(int index)
     {
-    	if(columna)
+    	if(index<0||index>=columnas)
+    		return null;
+    	boolean encontrado=false;
+    	Encabezado<R, S> aux=raiz_columnas;
+    	while(aux!=null&&!encontrado)
     	{
-    		Encabezado<T,S> aux_columna=raiz_columnas;
-    		boolean encontrado=false;
-    		while(aux_columna!=null&&!encontrado)
-    		{
-    			if(aux_columna.header.toLowerCase().equals(header.toLowerCase()))
-    				encontrado=true;
-    			else
-    				aux_columna=aux_columna.siguiente;
-    		}
-    		return aux_columna;
+    		if(aux.index==index)
+    			encontrado=true;
+    		else
+    			aux=aux.siguiente;	
     	}
-    	else
+    	return aux;
+    }
+    private Encabezado<T,S> getRowHeader(int index)
+    {
+    	if(index<0||index>=columnas)
+    		return null;
+    	boolean encontrado=false;
+    	Encabezado<T, S> aux=raiz_filas;
+    	while(aux!=null&&!encontrado)
     	{
-    		Encabezado<T,S> aux_fila=raiz_filas;
-    		boolean encontrado=false;
-    		while(aux_fila!=null&&!encontrado)
-    		{
-    			if(aux_fila.header.toLowerCase().equals(header.toLowerCase()))
-    				encontrado=true;
-    			else
-    				aux_fila=aux_fila.siguiente;
-    		}
-    		return aux_fila;
+    		if(aux.index==index)
+    			encontrado=true;
+    		else
+    			aux=aux.siguiente;	
     	}
+    	return aux;
+    }
+    private Encabezado<R,S> getColumnHeader(String header)
+    {
+		Encabezado<R,S> aux_columna=raiz_columnas;
+		boolean encontrado=false;
+		while(aux_columna!=null&&!encontrado)
+		{
+			if(aux_columna.header.toLowerCase().equals(header.toLowerCase()))
+				encontrado=true;
+			else
+				aux_columna=aux_columna.siguiente;
+		}
+		return aux_columna;
+    }
+    private Encabezado<T, S> getRowHeader(String header)
+    {
+		Encabezado<T,S> aux_fila=raiz_filas;
+		boolean encontrado=false;
+		while(aux_fila!=null&&!encontrado)
+		{
+			if(aux_fila.header.toLowerCase().equals(header.toLowerCase()))
+				encontrado=true;
+			else
+				aux_fila=aux_fila.siguiente;
+		}
+		return aux_fila;
     }
     public T getHeader(String header)
     {
@@ -464,6 +558,10 @@ public class Matriz <T,S>{
     public Encabezado<T, S> getRaizFila()
     {
     	return raiz_filas;
+    }
+    public Encabezado<R,S> getRaizColumna()
+    {
+    	return raiz_columnas;
     }
     
 

@@ -2,11 +2,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <html>
+<head>
+<link rel="stylesheet" type="text/css" href="mainstyle.css">
+</head>
 <title>Home</title>
+
 <body>
 	<!-- Aqui iria un encabezado -->
 	<!-- algunos dibujos -->
-	<img alt="Imagen no disponible" src="Imagenes/izumi.jpeg">
+	<img alt="Imagen no disponible" src="Imagenes/logo_institucional.png">
 	<form method="post" action="sesion">
 		${mensaje }
 		<fieldset>

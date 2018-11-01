@@ -24,6 +24,7 @@
 	<fieldset>
 		<legend>Agregar Tutor</legend>
 		<form action="tutores" method="post">
+			Carnet del Tutor:
 			<select name="tutor">
 				<%
 					Lista<Estudiante> aux_lista=DataBase.getPosiblesTutores();
@@ -37,11 +38,13 @@
 					}
 				%>
 			</select><br>
+			Curso:
 			<select name="curso">
 				<%
 					out.println(DataBase.getPensum().getCursos());
 				%>
 			</select><br>
+			Periodo:
 			<select name="periodo">
 				<%
 					for(int i=2000;i<2019;i++)

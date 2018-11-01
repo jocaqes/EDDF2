@@ -7,7 +7,7 @@ public class Grafo {
 	/**
 	 * matriz de adyacencia representacion de un grafo con Cursos del pensum como su contenido
 	 */
-	private Matriz<CursoP,String> matriz_adyacencia;
+	private Matriz<CursoP,String,Integer> matriz_adyacencia;
 
 	public Grafo() {
 		matriz_adyacencia=new Matriz<>();

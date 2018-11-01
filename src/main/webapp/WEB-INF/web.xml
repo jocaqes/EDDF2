@@ -61,4 +61,14 @@
     <servlet-name>ATutoresServlet</servlet-name>
     <url-pattern>/tutores</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ControlNotas</display-name>
+    <servlet-name>ControlNotas</servlet-name>
+    <servlet-class>org.jocaqes.EDDF2.controller.ControlNotas</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControlNotas</servlet-name>
+    <url-pattern>/controlnotas</url-pattern>
+  </servlet-mapping>
 </web-app>
