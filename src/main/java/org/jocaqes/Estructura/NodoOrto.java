@@ -43,6 +43,10 @@ public class NodoOrto <S>{
         return row+"_"+col;
     }
     
+    public void setItem(S item)
+    {
+    	this.item=item;
+    }
     
     @Override
     public String toString() {

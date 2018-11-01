@@ -117,6 +117,7 @@ public class ATutoresServlet extends HttpServlet {
 	{
 		int carnet = Integer.parseInt(request.getParameter("tutor"));
 		String curso=request.getParameter("curso");
+		System.out.println(curso);
 		int periodo=Integer.parseInt(request.getParameter("periodo"));
 		Tutor nuevo = new Tutor(carnet, curso, periodo);
 		if(DataBase.getTutores().insertar(nuevo, carnet))

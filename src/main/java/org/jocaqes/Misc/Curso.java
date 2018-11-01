@@ -4,6 +4,7 @@ package org.jocaqes.Misc;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
+
 //@XmlRootElement(name="curso")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Curso {
@@ -11,6 +12,7 @@ public class Curso {
 	public int nota;
 	public String fecha;
 	public String codigoCurso;
+
 	
 	public Curso(){}
 		

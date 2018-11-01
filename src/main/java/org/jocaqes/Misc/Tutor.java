@@ -60,7 +60,7 @@ public class Tutor {
 
 	public boolean agregarActividad(Actividad nueva)
 	{
-		if(control_notas.addColumn(nueva.getNombre(), nueva)==null) 
+		if(control_notas.addColumn(nueva.getActividad(), nueva)==null) 
 			return false;
 		return true;
 	}
@@ -91,7 +91,7 @@ public class Tutor {
 		{
 			select+="<option>";
 			if(aux.item!=null)
-				select+=aux.item.getNombre();
+				select+=aux.item.getActividad();
 			else
 				select+=aux.header;
 			select+="</option>\n";

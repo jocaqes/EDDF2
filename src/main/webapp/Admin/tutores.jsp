@@ -2,12 +2,12 @@
 <%@page import="org.jocaqes.Misc.Estudiante"%>
 <%@page import="org.jocaqes.Estructura.Lista"%>
 <%@page import="org.jocaqes.Misc.DataBase"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=iso-8859-1"
+    pageEncoding="iso-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="iso-8859-1">
 <title>Administracion</title>
 </head>
 <body>
@@ -57,8 +57,8 @@
 			</select><br>
 			<input type="hidden" name="tipo" value="add">
 			<input type="submit" value="Agregar">
-			${add }
 		</form>
+		${add }
 	</fieldset>
 	<br>
 	<fieldset>

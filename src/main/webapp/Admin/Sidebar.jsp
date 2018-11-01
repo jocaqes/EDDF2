@@ -8,6 +8,6 @@
 		<li><a href="pensum.jsp">Pensum</a></li>
 		<li><a href="estudiantes.jsp">Estudiantes</a></li>
 		<li><a href="tutores.jsp">Tutores</a></li>
-		<li><a href="certificado.jsp">Certificados</a></li>
+		<li>Certificados</li>
 	</ul>
 </div>

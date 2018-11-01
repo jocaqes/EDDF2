@@ -514,7 +514,7 @@ public class Matriz <T,S,R>{
     	}
     	return aux;
     }
-    private Encabezado<R,S> getColumnHeader(String header)
+    public Encabezado<R,S> getColumnHeader(String header)
     {
 		Encabezado<R,S> aux_columna=raiz_columnas;
 		boolean encontrado=false;
@@ -527,7 +527,7 @@ public class Matriz <T,S,R>{
 		}
 		return aux_columna;
     }
-    private Encabezado<T, S> getRowHeader(String header)
+    public Encabezado<T, S> getRowHeader(String header)
     {
 		Encabezado<T,S> aux_fila=raiz_filas;
 		boolean encontrado=false;
@@ -540,13 +540,13 @@ public class Matriz <T,S,R>{
 		}
 		return aux_fila;
     }
-    public T getHeader(String header)
+    public T getRowItem(String header)
     {
     	Encabezado<T,S> aux_fila=raiz_filas;
 		boolean encontrado=false;
 		while(aux_fila!=null&&!encontrado)
 		{
-			if(aux_fila.header.toLowerCase().equals(header.toLowerCase()))
+			if((aux_fila.item!=null&&aux_fila.item.toString().equals(header))||aux_fila.header.toLowerCase().equals(header.toLowerCase()))
 				encontrado=true;
 			else
 				aux_fila=aux_fila.siguiente;
@@ -554,6 +554,21 @@ public class Matriz <T,S,R>{
 		if(aux_fila==null)
 			return null;		
 		return aux_fila.item;
+    }
+    public R getColumnItem(String header)
+    {
+    	Encabezado<R,S> aux_columna=raiz_columnas;
+		boolean encontrado=false;
+		while(aux_columna!=null&&!encontrado)
+		{
+			if((aux_columna.item!=null&&aux_columna.item.toString().equals(header))||aux_columna.header.toLowerCase().equals(header.toLowerCase()))
+				encontrado=true;
+			else
+				aux_columna=aux_columna.siguiente;
+		}
+		if(aux_columna==null)
+			return null;		
+		return aux_columna.item;
     }
     public Encabezado<T, S> getRaizFila()
     {

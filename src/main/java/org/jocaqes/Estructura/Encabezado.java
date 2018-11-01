@@ -48,6 +48,14 @@ public class Encabezado <T,S>{
 		siguiente=null;
 	}
 
+    public void setHeader(String header)
+    {
+    	this.header=header;
+    }
+    public void setitem(T item)
+    {
+    	this.item=item;
+    }
 
 	/**
      * Metodo sobrecargado para generar codigo apto para graphviz

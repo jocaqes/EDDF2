@@ -21,7 +21,7 @@
 		<legend>Carga Pensum</legend>
 		<form method="post" action="pensum">
 			Ruta del archivo:<br>
-			<input type="text" name="ruta">
+			<input type="text" name="ruta" size="35">
 			<input type="hidden" name="tipo" value="load">
 			<input type="submit" value="OK"> 
 		</form>

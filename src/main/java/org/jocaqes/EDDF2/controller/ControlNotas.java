@@ -47,11 +47,97 @@ public class ControlNotas extends HttpServlet {
 			graficaActividades(request,response);
 		else if(tipo.equals("delete"))
 			eliminarActividad(request,response);
+		else if(tipo.equals("form"))
+			formularioModificar(request,response);
+		else if(tipo.equals("modify"))
+			modificarActividad(request,response);
 		else
 			response.sendRedirect("controlnotas.jsp");
 	}
     
     
+	private void modificarActividad(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int carne=Integer.parseInt(request.getParameter("carne"));
+		Tutor tutor = DataBase.getTutores().buscar(carne);
+		if(tutor==null)
+		{
+			request.setAttribute("modify", "Error, se acabo el tiempo de su sesion");
+			request.getRequestDispatcher("controlnotas.jsp").forward(request, response);
+		}
+		else
+		{
+			String nombre=request.getParameter("nombre");
+			String descripcion=request.getParameter("descripcion");
+			int ponderacion = Integer.parseInt(request.getParameter("ponderacion"));
+			String fecha=request.getParameter("fecha");
+			Tipo tipo = Tipo.valueOf(request.getParameter("tipo_actividad"));
+			Actividad modificada=new Actividad(nombre, descripcion, ponderacion, fecha, tipo);
+			tutor.getControlNotas().getColumnHeader(nombre).setitem(modificada);
+			tutor.getControlNotas().getColumnHeader(nombre).setHeader(modificada.getActividad());;
+			graficar(carne);
+			request.setAttribute("modify", "Actividad modificada con exito!!");
+			request.getRequestDispatcher("controlnotas.jsp").forward(request, response);
+		}
+	}
+
+
+	private void formularioModificar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
+		int carne=Integer.parseInt(request.getParameter("carne"));
+		String nombre=request.getParameter("nombre");
+		Tutor tutor = DataBase.getTutores().buscar(carne);
+		if(tutor==null)
+		{
+			request.setAttribute("form", "Error, se acabo el tiempo de su sesion");
+			request.getRequestDispatcher("controlnotas.jsp").forward(request, response);
+		}
+		else
+		{
+			Actividad a_modificar = tutor.getControlNotas().getColumnItem(nombre);
+			if(a_modificar==null)
+			{
+				request.setAttribute("form", "Esa actividad no existe");
+				request.getRequestDispatcher("controlnotas.jsp").forward(request, response);
+			}
+			else
+			{
+				String form="";
+				form+="<form method=\"post\" action=\"controlnotas\">";
+				form+="Nombre Previo:"+a_modificar.getActividad()+"<br>";
+				form+="Nuevo Nombre:<br>";
+				form+="<input type=\"text\" name=\"nombre\"><br>";
+				form+="Descripcion Previa:"+a_modificar.getDescripcion()+"<br>";
+				form+="Nueva Descripcion:<br>";
+				form+="<textarea rows=\"10\" cols=\"45\" name=\"descripcion\"></textarea>";
+				form+="Ponderacion Previa:"+a_modificar.getPonderacion()+"<br>";
+				form+="Ponderacion nueva:<br>";
+				form+="<input type=\"number\" name=\"ponderacion\"><br>";
+				form+="Fecha previa:"+a_modificar.getFecha_entrega()+"<br>";
+				form+="Fecha nueva:<br>";
+				form+="<input type=\"date\" name=\"fecha\"><br>";
+				if(a_modificar.getTipo()!=null)
+					form+="Tipo previo:"+a_modificar.getTipo().toString()+"<br>";
+				else
+					form+="No hay tipo previo<br>";
+				form+="Tipo nuevo:<br>";
+				form+="<select name=\"tipo_actividad\">";
+				for(Tipo tipo:Tipo.values())
+				{
+					form+="<option>";
+					form+=tipo.toString();
+					form+="</option>";
+				}
+				form+="</select>";
+				form+="<input type=\"hidden\" name=\"tipo\" value=\"modify\">";
+				form+="<input type=\"hidden\" name=\"carne\" value=\""+tutor.getCarnet()+"\">";
+				form+="<input type=\"submit\" value=\"Modificar\">";
+				form+="</form>";
+				request.setAttribute("form", form);
+				request.getRequestDispatcher("controlnotas.jsp").forward(request, response);
+			}
+		}
+	}
+
+
 	private void eliminarActividad(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int carne=Integer.parseInt(request.getParameter("carne"));
 		Tutor tutor = DataBase.getTutores().buscar(carne);

@@ -20,7 +20,7 @@
 		yo = DataBase.getTutores().buscar(Integer.parseInt(session.getAttribute("user").toString()));
 %>
 	<a href="../logout.jsp">Logout</a>
-	<h1>Control de Notas</h1>
+	<h1>Administracion de Actividades</h1>
 	<br>
 	<jsp:include page="sidebar.html"/>
 	<br>
@@ -49,7 +49,7 @@
 		<legend>Cargar Actividades</legend>
 		<form method="post" action="controlnotas">
 			Ruta del archivo:<br>
-			<input type="text" name="ruta"><br>
+			<input type="text" name="ruta" size="35"><br>
 			<input type="hidden" name="tipo" value="load">
 			<input type="hidden" name="carne" value=<%=session.getAttribute("user")%>>
 			<input type="submit" value="Cargar"> 
@@ -90,7 +90,20 @@
 	<br>
 	<fieldset>
 		<legend>Modificar Actividad</legend>
-		No implementado aun
+		<form method="post" action="controlnotas">
+			Seleccione la actividad que desea modificar:<br>
+			<select name="nombre">
+				<%
+					out.println(yo.actividades());
+				%>
+			</select><br>
+			<input type="hidden" name="tipo" value="form">
+			<input type="hidden" name="carne" value=<%=session.getAttribute("user") %>>
+			<input type="submit" value="Buscar">
+		</form>
+		${form }
+		${modify }
+		<br>
 	</fieldset>
 	<br>
 	<fieldset>

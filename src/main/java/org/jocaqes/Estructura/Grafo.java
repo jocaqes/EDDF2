@@ -47,7 +47,7 @@ public class Grafo {
 	
 	public int getCreditos(String codigo_curso)
 	{
-		CursoP curso=matriz_adyacencia.getHeader(codigo_curso);
+		CursoP curso=matriz_adyacencia.getRowItem(codigo_curso);
 		if(curso==null)
 			return 0;
 		return curso.getCreditos();
@@ -68,6 +68,10 @@ public class Grafo {
 			aux=aux.siguiente;
 		}
 		return select;
+	}
+	public CursoP getCurso(String nombre)
+	{
+		return matriz_adyacencia.getRowItem(nombre);
 	}
 	
 	

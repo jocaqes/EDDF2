@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  */
 @XmlRootElement(name="actividad")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class Actividad {
 	
 	/**
@@ -42,11 +42,11 @@ public class Actividad {
 		this.tipo = tipo;
 	}
 	
-	public String getNombre() {
+	public String getActividad() {
 		return actividad;
 	}
-	public void setNombre(String nombre) {
-		this.actividad = nombre;
+	public void setActividad(String actividad) {
+		this.actividad = actividad;
 	}
 	public String getDescripcion() {
 		return descripcion;
@@ -69,8 +69,11 @@ public class Actividad {
 	public Tipo getTipo() {
 		return tipo;
 	}
-	public void setTipo(Tipo tipo) {
-		this.tipo = tipo;
+	public void setTipo(String tipo) {
+		if(tipo==null||tipo.isEmpty())
+			this.tipo=null;
+		else
+			this.tipo = Tipo.valueOf(tipo);
 	}
 	
 	

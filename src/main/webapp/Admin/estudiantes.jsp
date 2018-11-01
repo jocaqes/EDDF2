@@ -25,7 +25,7 @@
 	<legend>Cargar Estudiantes</legend>
 		<form method="post" action="estudiantes">
 			Ruta del archivo:<br>
-			<input type="text" name="ruta"><br>
+			<input type="text" name="ruta" size="35"><br>
 			<input type="hidden" name="tipo" value="load"> 
 			<input type="submit" value="OK">
 		</form>
