@@ -44,14 +44,22 @@ public class NodoH <T>{
      */
     public void add(T item, String id)
     {
+    	if(id.equals(this.id))
+    		return;
         if(siguiente==null)
             siguiente=new NodoH<>(item,id);
         else
         {
             NodoH<T> aux=siguiente;
-            while(aux.siguiente!=null)
+            boolean repetido=false;
+            while(aux.siguiente!=null&&!repetido)
+            {
+            	if(aux.siguiente.id.equals(id))
+            		repetido=true;
                 aux=aux.siguiente;
-            aux.siguiente=new NodoH<>(item,id);
+            }
+            if(!repetido)
+            	aux.siguiente=new NodoH<>(item,id);
         }
     }
     public void add(NodoH<T> nodo)
@@ -156,7 +164,7 @@ public class NodoH <T>{
 			codigo+="|";
 			aux=aux.siguiente;
 		}
-		codigo="}\"];\n";
+		codigo+="}\"];\n";
 		return codigo;
 	}
     

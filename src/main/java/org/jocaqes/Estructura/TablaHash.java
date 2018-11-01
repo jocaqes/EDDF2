@@ -130,6 +130,7 @@ public class TablaHash <T>{
     	String codigo="digraph G{\n";
     	String subcodigo="";
     	codigo+="nodesep=.05;\n";
+    	codigo+="splines=ortho;\n";
     	codigo+="rankdir=LR;\n";
     	codigo+="node[shape=record];\n";
     	codigo+="nodo0[label=\"";
@@ -139,11 +140,15 @@ public class TablaHash <T>{
     		if(tabla[i]!=null)
     		{
     			codigo+=tabla[i].item.toString();
-    			if(tabla[i].siguiente!=null)
-    			{
-    				subcodigo+="nodo"+i+tabla[i].siguiente.toString();
+    			//if(tabla[i].siguiente!=null)
+    		//	{
+    				subcodigo+="nodo"+i+tabla[i].toString();
     				subcodigo+="nodo0:f"+i+"->nodo"+i+":n;\n";
-    			}
+    			//}
+    		}
+    		else
+    		{
+    			codigo+="vacio";
     		}
     		if(i<size-1)
     			codigo+="|";
@@ -187,6 +192,7 @@ public class TablaHash <T>{
     	}
     	oldtabla=null;
     }
+    
     
     private boolean pseudoPrime(int n)
     {

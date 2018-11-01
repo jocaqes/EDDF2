@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response.Status;
 import org.jocaqes.EDDF2.services.TutorService;
 import org.jocaqes.Misc.Actividad;
 import org.jocaqes.Misc.Actividades;
+import org.jocaqes.Misc.Alumnos;
 
 @Path("/Tutor")
 public class TutorResource {
@@ -41,6 +42,18 @@ public class TutorResource {
 	public Response agregarActividad(Actividad actividad)
 	{
 		return Response.status(Status.OK).entity(actividad).build();
+	}
+	
+	@POST
+	@Path("/cargar/alumnos")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response cargarAlumnos(Alumnos alumnos)
+	{
+		List<Integer> estudiantes=alumnos.getEstudiantes();
+		if(estudiantes==null||estudiantes.isEmpty())
+			return Response.status(Status.BAD_REQUEST).entity("{\"error\":\"No hay datos para realizar la carga de alumnos\"}").build();
+		return Response.status(Status.OK).entity(alumnos).build();
 	}
 
 }

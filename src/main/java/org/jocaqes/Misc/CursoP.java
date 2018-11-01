@@ -24,7 +24,7 @@ public class CursoP {
 	private String area;
 	private List<String> pre; 
 	@XmlTransient
-	private TablaHash<Integer> alumnos;
+	private TablaHash<Alumno> alumnos;
 	
 	public CursoP() {alumnos=new TablaHash<>();}
 
@@ -60,7 +60,7 @@ public class CursoP {
 		this.pre = pre;
 	}
 	@XmlTransient
-	public TablaHash<Integer> getAlumnos() {
+	public TablaHash<Alumno> getAlumnos() {
 		return alumnos;
 	}
 

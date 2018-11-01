@@ -75,9 +75,7 @@
 		<input type="submit" value="Graficar">
 	</form>
 	<br>
-	<div class="zoom">
 	${imagen }
-	</div>
 	</fieldset>
 	
 	

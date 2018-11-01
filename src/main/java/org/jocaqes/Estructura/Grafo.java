@@ -2,6 +2,12 @@ package org.jocaqes.Estructura;
 
 import org.jocaqes.Misc.CursoP;
 
+/**
+ * Clase grafo lista para manejar cursos del pensum
+ * solo puede trabajar con matriz de adyacencia
+ * @author jocaqes
+ *
+ */
 public class Grafo {
 	
 	/**
