@@ -214,6 +214,39 @@ public class Matriz <T,S,R>{
         return false;
     }
     /**
+     * Busca en la matriz la celda que corresponda en la interseccion de fila y columna
+     * provistas y modifica su contenido
+     * @param encabezado_columna la columna donde pertenece la celda
+     * @param encabezado_fila la fila donde pertenece la celda
+     * @param item el nuevo valor para guardar el la celda
+     * @return <tt>true</tt> si la modificacion fue exitosa
+     * <tt>false</tt> en caso de que la fila, columna o la celda no existan
+     */
+    public boolean modifyCell(String encabezado_columna, String encabezado_fila, S item)
+    {
+    	Encabezado<T,S> row_aux=getRowHeader(encabezado_fila);
+    	if(row_aux==null)
+    		return false;
+    	Encabezado<R,S> col_aux=getColumnHeader(encabezado_columna);
+    	if(col_aux==null)
+    		return false;
+    	NodoOrto<S> aux = row_aux.raiz;
+    	boolean modificado=false;
+    	while(aux!=null&&!modificado)
+    	{
+    		if(aux.col==col_aux.index&&aux.row==row_aux.index)
+    			modificado=true;
+    		else
+    			aux=aux.right;
+    	}
+    	if(modificado)
+    	{
+    		aux.item=item;
+    		return true;
+    	}
+    	return false;
+    }
+    /**
      * Revisa si una celda intenta ser insertada en un espacio ocupado
      * @param col la columna del espacio ocupado
      * @param row la fila del espacio ocupado

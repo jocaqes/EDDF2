@@ -18,6 +18,7 @@ public class DataBase {
 	private static Grafo pensum=new Grafo(); 
 	private static Lista<Estudiante> posibles_tutores=new Lista<>();
 	private static AVL<Tutor> tutores=new AVL<>(); 
+	private static ControlCortos todos_los_cortos=new ControlCortos();
 	
 	public static ArbolB<Estudiante> getBtreeEstudiantes()
 	{
@@ -34,6 +35,10 @@ public class DataBase {
 	public static AVL<Tutor> getTutores()
 	{
 		return tutores;
+	}
+	public static ControlCortos getCortos()
+	{
+		return todos_los_cortos;
 	}
 	
 	

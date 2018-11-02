@@ -1,10 +1,10 @@
 <!--<%@page import="javax.ws.rs.core.Response"%>-->
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=iso-8859-1"
+    pageEncoding="iso-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="iso-8859-1">
 <title>Test title</title>
 </head>
 <body>

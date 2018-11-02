@@ -1,6 +1,6 @@
 <%@page import="org.jocaqes.Misc.Archivo"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=iso-8859-1"
+    pageEncoding="iso-8859-1"%>
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="mainstyle.css">
@@ -17,7 +17,7 @@
 			<legend>Login</legend>
 			Nombre de Usuario:<br>
 			<input type="text" name="usuario"><br>
-			ContraseÃ±a(140918):<br>
+			Contraseña(140918):<br>
 			<input type="password" name="password"><br><br>
 			<input type="submit" value="OK">
 		</fieldset>	

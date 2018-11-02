@@ -72,7 +72,7 @@ public class Sesion extends HttpServlet {
 					if(DataBase.getTutores().existe(carne))
 						response.sendRedirect("Tutor/homeTutor.jsp");
 					else
-						response.sendRedirect("test.jsp");
+						response.sendRedirect("Estudiante/homeEstudiante.jsp");
 				}
 				else//aqui es un Status.UNAUTHORIZED pero la verdad es irrelevante porque no puedo dejar que la pagina se caiga
 				{

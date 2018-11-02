@@ -56,6 +56,20 @@ public class Lista <T>{
 		return aux.item;
 	}
 	
+	public void eliminar(int index)
+	{
+		if(index<0||index>=count)
+			return;
+		if(index==0)
+			raiz=raiz.siguiente;
+		else
+		{
+			NodoS<T> anterior=raiz;
+			for(int i=0;i<index-1;i++)
+				anterior=anterior.siguiente;
+			anterior.siguiente=anterior.siguiente.siguiente;
+		}
+	}
 	/**
 	 * Recupera el item que corresponde con un id entregado.
 	 * Hace uso de la funcion gethash para recuperar un id
@@ -77,6 +91,12 @@ public class Lista <T>{
 		if(encontrado)
 			return true;
 		return false;
+	}
+	
+	public void clear()
+	{
+		raiz=null;
+		count=0;
 	}
 	
 	

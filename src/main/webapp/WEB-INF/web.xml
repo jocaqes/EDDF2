@@ -81,4 +81,34 @@
     <servlet-name>TutorAlumnos</servlet-name>
     <url-pattern>/alumnos</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>NotasServlet</display-name>
+    <servlet-name>NotasServlet</servlet-name>
+    <servlet-class>org.jocaqes.EDDF2.controller.NotasServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NotasServlet</servlet-name>
+    <url-pattern>/notas</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CortosServlet</display-name>
+    <servlet-name>CortosServlet</servlet-name>
+    <servlet-class>org.jocaqes.EDDF2.controller.CortosServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CortosServlet</servlet-name>
+    <url-pattern>/cortos</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EdicionCortoServlet</display-name>
+    <servlet-name>EdicionCortoServlet</servlet-name>
+    <servlet-class>org.jocaqes.EDDF2.controller.EdicionCortoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EdicionCortoServlet</servlet-name>
+    <url-pattern>/edicioncorto</url-pattern>
+  </servlet-mapping>
 </web-app>

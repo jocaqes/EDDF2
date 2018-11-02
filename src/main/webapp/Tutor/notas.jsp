@@ -1,12 +1,12 @@
 <%@page import="org.jocaqes.Misc.Tutor"%>
 <%@page import="org.jocaqes.Misc.DataBase"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=iso-8859-1"
+    pageEncoding="iso-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="tutorstyle.css">
-<meta charset="UTF-8">
+<meta charset="iso-8859-1">
 <title>Tutor</title>
 </head>
 <body>
@@ -25,17 +25,79 @@
 	<br>
 	<fieldset>
 		<legend>Cargar Notas</legend>
-		No implementado
+		<form method="post" action="notas">
+			Actividad:<br>
+			<select name="actividad">
+				<%=yo.getActividades() %>
+			</select><br>
+			Ruta del archivo:<br>
+			<input type="text" name="ruta" size="35"><br>
+			<input type="hidden" name="tipo" value="load">
+			<input type="hidden" name="tutor" value=<%=session.getAttribute("user")%>>
+			<input type="submit" value="Cargar"> 
+		</form>
+		${load }
 	</fieldset>
 	<br>
 	<fieldset>
 		<legend>Agregar Nota</legend>
-		No implementado
+		<form method="post" action="notas">
+		<table>
+		<tr>
+			<td>Actividad</td>
+			<td>
+			<select name="actividad">
+				<%
+					out.println(yo.getActividades());
+				%>
+			</select></td>
+			</tr>
+			<tr>
+			<td>Alumno</td>
+			<td>
+			<select name="alumno">
+				<%out.println(yo.getAlumnos()); %>
+			</select></td>
+			</tr>
+			<tr>
+			<td>Nota</td>
+				<td><input type="number" name="calificacion"></td>
+			</tr>
+			</table>
+			<input type="hidden" name="tipo" value="add">
+			<input type="hidden" name="tutor" value=<%=session.getAttribute("user") %>>
+			
+			<input type="submit" value="Agregar">
+		</form>
+		${add }
 	</fieldset>
 	<br>
 	<fieldset>
 		<legend>Modificar Nota</legend>
-		No implementado
+		<form method="post" action="notas">
+			<table>
+				<tr>
+					<td>Actividad</td>
+					<td>
+					<select name="actividad"><%out.println(yo.getActividades()); %></select>
+					</td>
+				</tr>
+				<tr>
+					<td>Alumno</td>
+					<td>
+					<select name="alumno"><%out.println(yo.getAlumnos()); %></select>
+					</td>
+				</tr>
+				<tr>
+					<td>Nota</td>
+					<td><input type="number" name="calificacion"></td>
+				</tr>
+			</table>
+			<input type="hidden" name="tipo" value="modify">
+			<input type="hidden" name="tutor" value=<%=session.getAttribute("user") %>>
+			<input type="submit" value="Modificar">
+		</form>
+		${modify }
 	</fieldset>
 	<br>
 	<fieldset>

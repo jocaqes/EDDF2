@@ -2,6 +2,7 @@ package org.jocaqes.Misc;
 
 import org.jocaqes.Estructura.Encabezado;
 import org.jocaqes.Estructura.Matriz;
+import org.jocaqes.Estructura.NodoOrto;
 
 /**
  * Clase para manejar un tutor, sus alumnos y su control de notas
@@ -57,13 +58,56 @@ public class Tutor {
 	{
 		return control_notas;
 	}
-
+	/**
+	 * Agrega una nueva actividad a su hoja de control de notas
+	 * @param nueva la actividad que se desea agregar
+	 * @return <tt>true</tt> si la actividad fue agregada con exito,
+	 * <tt>false</tt> en caso que la actividad estuviese repetida
+	 */
 	public boolean agregarActividad(Actividad nueva)
 	{
 		if(control_notas.addColumn(nueva.getActividad(), nueva)==null) 
 			return false;
 		return true;
 	}
+	
+	/**
+	 * Agrega una nueva nota en la hoja de control
+	 * @param actividad la actividad a la que pertenece
+	 * @param carne el alumno al que se le acredita la nota
+	 * @param nota la ponderacion de la actividad
+	 * @return <tt>true</tt> si la nota fue agregada con exito
+	 * <tt>false</tt> en caso de que el alumno o la actividad 
+	 * no pertenezcan a la hoja de control
+	 */
+	public boolean agregarNota(String actividad, int carne, int nota)
+	{
+		String carne_=String.valueOf(carne);
+		Encabezado<Actividad, Integer> fila=control_notas.getColumnHeader(actividad);
+		int max=fila.item.getPonderacion();
+		if(nota>max)
+			nota=max;
+		return control_notas.addCell(actividad, carne_, nota, false);
+	}
+	/**
+	 * Modifica una nota en la hoja de control
+	 * @param actividad la actividad al la que se le quiere modificar la nota
+	 * @param carne el estudiante al que se le quiere modificar la nota
+	 * @param nota la nueva nota del estudiante
+	 * @return <tt>true</tt> si la modificacion fue exitosa
+	 * <tt>false</tt> si alguno de los parametros no existe en la hoja de control
+	 * o si no existia nota previa para esos parametros
+	 */
+	public boolean modificarNota(String actividad, int carne, int nota)
+	{
+		String carne_=String.valueOf(carne);
+		Encabezado<Actividad, Integer> fila=control_notas.getColumnHeader(actividad);
+		int max=fila.item.getPonderacion();
+		if(nota>max)
+			nota=max;
+		return control_notas.modifyCell(actividad, carne_, nota);
+	}
+	
 	/**
 	 * Suma la ponderacion de todas las actividades de control de notas y la retorna
 	 * @return un entero con la suma de ponderaciones, si esta vacio el control de notas retorna 0
@@ -80,10 +124,10 @@ public class Tutor {
 		return ponderacion_total;
 	}
 	/**
-	 * Codigo para agregar en jsp en un select con todas las actividades cargadas por el tutor
+	 * Codigo para generar en jsp un select con todas las actividades cargadas por el tutor
 	 * @return una cadena para jsp
 	 */
-	public String actividades()
+	public String getActividades()
 	{
 		String select="";
 		Encabezado<Actividad,Integer> aux = control_notas.getRaizColumna();
@@ -99,6 +143,24 @@ public class Tutor {
 		}
 		return select;
 	}
+	public String getAlumnos()
+	{
+		String select="";
+		Encabezado<Integer,Integer> aux = control_notas.getRaizFila();
+		while(aux!=null)
+		{
+			select+="<option>";
+			if(aux.item!=null)
+				select+=aux.item.toString();
+			else
+				select+=aux.header;
+			select+="</option>\n";
+			aux=aux.siguiente;
+		}
+		return select;
+	}
+	
+	
 	/**
 	 * Revisa el control de notas y obtiene un codigo en formato de graphviz para poder graficar la matriz
 	 * @return una cadena con codigo de graphviz

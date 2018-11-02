@@ -1,13 +1,13 @@
 <%@page import="org.jocaqes.Misc.Tutor"%>
 <%@page import="org.jocaqes.Misc.DataBase"%>
 <%@page import="org.jocaqes.Misc.Actividad"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=iso-8859-1"
+    pageEncoding="iso-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="tutorstyle.css">
-<meta charset="UTF-8">
+<meta charset="iso-8859-1">
 <title>Tutor</title>
 </head>
 <body>
@@ -94,11 +94,11 @@
 			Seleccione la actividad que desea modificar:<br>
 			<select name="nombre">
 				<%
-					out.println(yo.actividades());
+					out.println(yo.getActividades());
 				%>
 			</select><br>
 			<input type="hidden" name="tipo" value="form">
-			<input type="hidden" name="carne" value=<%=session.getAttribute("user") %>>
+			<input type="hidden" name="carne" value=<%=session.getAttribute("user")%>>
 			<input type="submit" value="Buscar">
 		</form>
 		${form }
@@ -112,7 +112,7 @@
 			Seleccione la actividad que desea eliminar:<br>
 			<select name="nombre">
 			<%
-				out.println(yo.actividades());
+				out.println(yo.getActividades());
 			%>
 			</select>
 			<input type="hidden" name="tipo" value="delete">

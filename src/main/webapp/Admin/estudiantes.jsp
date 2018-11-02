@@ -1,11 +1,11 @@
 <%@page import="org.jocaqes.Misc.Estudiante"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=iso-8859-1"
+    pageEncoding="iso-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="adminStyle.css">
-<meta charset="UTF-8">
+<meta charset="iso-8859-1">
 <title>Administracion</title>
 </head>
 <body>
@@ -45,7 +45,7 @@
 			<input type="text" name="dpi"><br>
 			Correo:<br>
 			<input type="email" name="correo"><br>
-			ContraseÃ±a:<br>
+			Contraseña:<br>
 			<input type="text" name="password"><br>
 			<input type="hidden" name="tipo" value="add">
 			<input type="submit" value="Agregar">

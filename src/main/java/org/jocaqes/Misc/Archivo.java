@@ -69,7 +69,7 @@ public class Archivo {
 			BufferedReader br = new BufferedReader(archivo);
 			String lectura="";
 			while((lectura=br.readLine())!=null)
-				contenido+=lectura;
+				contenido+=lectura+"\n";
 			br.close();
 				
 		} catch (FileNotFoundException e) {
